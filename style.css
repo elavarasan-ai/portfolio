@@ -28,26 +28,32 @@ background-size:400% 400%;
 animation:bgMove 12s ease infinite;
 
 nav{
-    background:#1e293b;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    padding:20px 60px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px 50px;
-    position:sticky;
-    top:0;
+
+    background:rgba(15,23,42,0.85);
+    backdrop-filter:blur(12px);
+
+    z-index:1000;
 }
 
-nav h2{
+.logo{
+    font-size:28px;
+    font-weight:bold;
     color:#38bdf8;
 }
 
 nav ul{
     display:flex;
     list-style:none;
-}
-
-nav ul li{
-    margin-left:25px;
+    gap:25px;
 }
 
 nav ul li a{
