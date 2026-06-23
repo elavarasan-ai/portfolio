@@ -43,6 +43,21 @@ nav{
     font-size:28px;
     font-weight:bold;
     color:#38bdf8;
+    .logo{
+    animation:logoGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes logoGlow{
+    from{
+        text-shadow:0 0 5px #38bdf8;
+    }
+    to{
+        text-shadow:
+        0 0 10px #38bdf8,
+        0 0 20px #38bdf8,
+        0 0 30px #38bdf8;
+    }
+}
 }
 
 nav ul{
@@ -125,6 +140,17 @@ p{
     border:4px solid #38bdf8;
     margin-bottom:20px;
     animation:float 3s ease-in-out infinite;
+    .profile-img{
+    box-shadow:0 0 25px rgba(56,189,248,0.5);
+}
+
+.profile-img:hover{
+    transform:scale(1.05);
+    box-shadow:
+    0 0 20px #38bdf8,
+    0 0 40px #38bdf8,
+    0 0 60px #38bdf8;
+}
 }
 
 @keyframes float{
@@ -867,4 +893,73 @@ footer p{
 .skill-badge:hover{
     transform:translateY(-5px);
     box-shadow:0 0 20px rgba(56,189,248,0.4);
+}
+.hero-buttons .btn{
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.05);
+    }
+    100%{
+        transform:scale(1);
+    }
+}h2{
+    position:relative;
+    display:inline-block;
+}
+
+h2::after{
+    content:'';
+    position:absolute;
+    left:0;
+    bottom:-5px;
+    width:0;
+    height:3px;
+    background:#38bdf8;
+    transition:0.5s;
+}
+
+h2:hover::after{
+    width:100%;
+}
+.circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(56,189,248,0.1);
+    animation:floatCircle 8s infinite ease-in-out;
+}
+
+.c1{
+    width:100px;
+    height:100px;
+    top:100px;
+    left:10%;
+}
+
+.c2{
+    width:150px;
+    height:150px;
+    top:250px;
+    right:10%;
+}
+
+.c3{
+    width:70px;
+    height:70px;
+    top:180px;
+    left:50%;
+}
+
+@keyframes floatCircle{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-30px);
+    }
 }
