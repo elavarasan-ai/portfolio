@@ -22,11 +22,6 @@ body{
     color:white;
     line-height:1.6;
 }
-
-background-size:400% 400%;
-
-animation:bgMove 12s ease infinite;
-
 nav{
     position:fixed;
     top:0;
@@ -395,36 +390,12 @@ footer{
     color:#38bdf8;
     margin-bottom:10px;
 }
-/* Mobile Responsive */
-
-
-    .learning-container,
-    .skills-container,
-    .stats-container{
-        display:grid;
-        grid-template-columns:1fr !important;
-    }
-
-    h1{
-        font-size:38px !important;
-    }
-
-    h2{
-        font-size:28px !important;
-    }
-
-    p{
-        word-wrap:break-word;
-    }
-}
 .typing-name{
     white-space: nowrap;
 }
 footer p{
     word-break:break-word;
 }
-.project-card
-.project-container
 .menu-toggle{
     display:none;
     font-size:30px;
@@ -440,22 +411,6 @@ footer p{
     nav{
         padding:15px;
     }
-
-    nav ul{
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:center;
-        gap:15px;
-    }
-
-    nav ul li{
-        margin:0;
-    }
-
-    nav ul li a{
-        font-size:18px;
-    }
-
     section{
         padding:50px 20px;
     }
@@ -499,5 +454,227 @@ footer p{
 
     footer p{
         word-break:break-word;
+    }
+}
+.hero-tag{
+    display:inline-block;
+    padding:10px 20px;
+    border:1px solid #38bdf8;
+    border-radius:30px;
+    margin:20px 0;
+    color:#38bdf8;
+    background:rgba(56,189,248,0.1);
+}
+
+.hero-description{
+    max-width:700px;
+    margin:20px auto;
+    color:#cbd5e1;
+    font-size:20px;
+}
+
+.hero-buttons{
+    margin-top:25px;
+}
+
+.hero-buttons .btn{
+    margin:10px;
+}
+.hero-image{
+    position:relative;
+    display:inline-block;
+    margin-bottom:30px;
+}
+
+.floating-icon{
+    position:absolute;
+    width:60px;
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#1e293b;
+    border-radius:50%;
+    font-size:28px;
+    border:1px solid #38bdf8;
+    box-shadow:0 0 15px rgba(56,189,248,0.3);
+
+    animation:floatIcon 4s ease-in-out infinite;
+}
+
+.python{
+    top:-20px;
+    left:-60px;
+}
+
+.sql{
+    top:-20px;
+    right:-60px;
+}
+
+.ai{
+    bottom:10px;
+    left:-70px;
+}
+
+.cloud{
+    bottom:10px;
+    right:-70px;
+}
+
+@keyframes floatIcon{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
+.stat-card{
+    background:rgba(30,41,59,0.8);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(56,189,248,0.3);
+}
+.timeline{
+    position:relative;
+    max-width:900px;
+    margin:40px auto;
+}
+
+.timeline::after{
+    content:'';
+    position:absolute;
+    width:4px;
+    background:#38bdf8;
+    top:0;
+    bottom:0;
+    left:50%;
+    margin-left:-2px;
+}
+
+.timeline-item{
+    padding:10px 40px;
+    position:relative;
+    width:50%;
+}
+
+.timeline-item:nth-child(odd){
+    left:0;
+}
+
+.timeline-item:nth-child(even){
+    left:50%;
+}
+
+.timeline-content{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+    border:1px solid rgba(56,189,248,0.3);
+    box-shadow:0 0 15px rgba(56,189,248,0.15);
+}
+
+.timeline-content h3{
+    color:#38bdf8;
+    margin-bottom:10px;
+}
+.project-card,
+.learning-card,
+.stat-card{
+
+    background:rgba(30,41,59,0.75);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    transition:0.4s;
+}
+
+.project-card:hover,
+.learning-card:hover,
+.stat-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:
+    0 0 25px rgba(56,189,248,0.25);
+}
+.menu-toggle{
+    display:none;
+    font-size:30px;
+    color:white;
+    cursor:pointer;
+}
+@media(max-width:768px){
+
+    .menu-toggle{
+        display:block;
+    }
+
+    nav{
+        padding:15px 20px;
+        flex-wrap:wrap;
+    }
+
+    nav ul{
+        display:none;
+        flex-direction:column;
+        width:100%;
+        text-align:center;
+        margin-top:15px;
+    }
+
+    nav ul.active{
+        display:flex;
+    }
+}
+@media(max-width:768px){
+
+    .hero-image{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    .floating-icon{
+        width:45px;
+        height:45px;
+        font-size:20px;
+    }
+
+    .python{
+        left:-25px;
+        top:-10px;
+    }
+
+    .sql{
+        right:-25px;
+        top:-10px;
+    }
+
+    .ai{
+        left:-25px;
+        bottom:0;
+    }
+
+    .cloud{
+        right:-25px;
+        bottom:0;
+    }
+}
+@media(max-width:768px){
+
+    .timeline::after{
+        left:20px;
+    }
+
+    .timeline-item{
+        width:100%;
+        left:0 !important;
+        padding-left:50px;
+        padding-right:10px;
     }
 }
