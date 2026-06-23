@@ -30,7 +30,7 @@ counters.forEach(counter => {
         if(current < target){
 
             counter.innerText =
-            (current + increment).toFixed(1);
+             Math.ceil(current + increment);
 
             setTimeout(updateCounter, 30);
 
@@ -42,3 +42,23 @@ counters.forEach(counter => {
 
     updateCounter();
 });
+function topFunction(){
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+window.onscroll = function() {
+
+    let btn = document.getElementById("topBtn");
+
+    if(document.body.scrollTop > 300 ||
+       document.documentElement.scrollTop > 300){
+
+        btn.style.display = "block";
+
+    }else{
+
+        btn.style.display = "none";
+    }
+};
