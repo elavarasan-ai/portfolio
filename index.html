@@ -1,541 +1,1202 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELAVARASAN T | Portfolio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Elavarasan T – Aspiring Data Analyst, Data Science Enthusiast & AI Learner. Portfolio showcasing Python, ML, Data Analytics and full-stack projects." />
+  <meta name="keywords" content="Elavarasan T, Data Analyst, Data Science, AI, Python, Machine Learning, Portfolio, Tamil Nadu" />
+  <meta name="author" content="Elavarasan T" />
+  <meta property="og:title"       content="Elavarasan T | Data Analyst Portfolio" />
+  <meta property="og:description" content="Aspiring Data Analyst & AI Learner – Python · SQL · ML · Cloud" />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://elavarasan-ai.github.io/portfolio/" />
+  <title>Elavarasan T | Data Analyst &amp; AI Enthusiast</title>
 
-    <link rel="stylesheet" href="./style.css">
-    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+  /* ============================================================
+     INLINE ADDITIONS – keeps style.css untouched
+     ============================================================ */
+
+  /* ── Root overrides for live-site fidelity ── */
+  :root {
+    --clr-bg:     #07090f;
+    --clr-bg-2:   #0b0d18;
+    --clr-bg-3:   #0e1120;
+    --clr-a1:     #6c63ff;
+    --clr-a2:     #00d4ff;
+    --clr-a3:     #a855f7;
+    --nav-h:      66px;
+  }
+
+  /* ── WhatsApp button ── */
+  .btn-whatsapp {
+    background: linear-gradient(135deg, #25d366, #128c3e);
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(37,211,102,.38);
+  }
+  .btn-whatsapp:hover {
+    box-shadow: 0 8px 36px rgba(37,211,102,.55);
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  /* ── Achievements & Strengths section ── */
+  .ach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+  .ach-card {
+    padding: 24px 22px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: transform .35s ease, box-shadow .35s ease, border-color .35s;
+  }
+  .ach-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 48px rgba(108,99,255,.18);
+    border-color: rgba(108,99,255,.35);
+  }
+  .ach-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--grad-main);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.05rem; color: #fff;
+    box-shadow: 0 6px 18px rgba(108,99,255,.3);
+  }
+  .ach-body h4 { font-size: .95rem; font-weight: 600; margin-bottom: 4px; }
+  .ach-body p  { font-size: .82rem; color: var(--txt-secondary); line-height: 1.6; }
+
+  /* ── Currently Learning strip ── */
+  .learning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+  }
+  .learn-card {
+    padding: 22px 20px;
+    text-align: center;
+    transition: transform .35s ease, box-shadow .35s ease;
+  }
+  .learn-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(108,99,255,.15); }
+  .learn-icon {
+    font-size: 1.6rem; margin-bottom: 12px;
+    background: var(--grad-main);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .learn-card h4 { font-size: .92rem; font-weight: 600; margin-bottom: 6px; }
+  .learn-card p  { font-size: .8rem;  color: var(--txt-secondary); }
+
+  /* ── Strengths pills ── */
+  .strengths-row {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    justify-content: center;
+    margin-top: 32px;
+  }
+  .strength-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px;
+    background: rgba(108,99,255,.08);
+    border: 1px solid rgba(108,99,255,.2);
+    border-radius: 99px;
+    font-size: .85rem; font-weight: 600;
+    color: var(--txt-secondary);
+    transition: background .3s, color .3s, transform .3s, box-shadow .3s;
+  }
+  .strength-pill i { color: var(--clr-a1); }
+  .strength-pill:hover {
+    background: rgba(108,99,255,.18);
+    color: var(--txt-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(108,99,255,.2);
+  }
+
+  /* ── Extra activities ── */
+  .activities-row {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .activity-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 9px 18px;
+    background: rgba(0,212,255,.06);
+    border: 1px solid rgba(0,212,255,.15);
+    border-radius: 99px;
+    font-size: .82rem; font-weight: 500;
+    color: var(--clr-a2);
+    font-family: var(--font-mono);
+    transition: background .3s, transform .3s;
+  }
+  .activity-chip:hover { background: rgba(0,212,255,.12); transform: translateY(-2px); }
+
+  /* ── Contact info card ── */
+  .contact-info-card {
+    padding: 32px;
+    margin-top: 28px;
+  }
+  .contact-info-card h3 {
+    font-size: 1rem; font-weight: 600; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+    color: var(--clr-a2);
+  }
+  .cinfo-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+  .cinfo-row:last-child { border-bottom: none; }
+  .cinfo-icon {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--grad-main);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; color: #fff;
+  }
+  .cinfo-label { font-size: .72rem; color: var(--txt-muted); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .1em; }
+  .cinfo-value { font-size: .88rem; font-weight: 500; }
+  .cinfo-value a { color: var(--txt-primary); transition: color .25s; }
+  .cinfo-value a:hover { color: var(--clr-a2); }
+
+  /* ── Quick action buttons (hero row) ── */
+  .hero-actions {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+  .hero-actions .btn {
+    font-size: .88rem;
+    padding: 11px 22px;
+  }
+
+  /* ── Career objective banner ── */
+  .objective-banner {
+    padding: 32px 36px;
+    margin-bottom: 0;
+    position: relative; overflow: hidden;
+    text-align: center;
+  }
+  .objective-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(108,99,255,.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .objective-banner .obj-label {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--clr-a2);
+    text-transform: uppercase;
+    letter-spacing: .18em;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .objective-banner p {
+    font-size: 1rem;
+    color: var(--txt-secondary);
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.8;
+    position: relative; z-index: 1;
+  }
+  .objective-banner strong { color: var(--txt-primary); }
+
+  /* ── Journey / mini timeline ── */
+  .journey-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 8px;
+  }
+  .journey-card {
+    padding: 24px 22px;
+    position: relative; overflow: hidden;
+    transition: transform .35s, box-shadow .35s;
+  }
+  .journey-card:hover { transform: translateY(-4px); box-shadow: 0 16px 44px rgba(108,99,255,.18); }
+  .journey-year {
+    font-family: var(--font-mono);
+    font-size: 1.6rem; font-weight: 700;
+    background: var(--grad-main);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 10px;
+  }
+  .journey-card p { font-size: .85rem; color: var(--txt-secondary); line-height: 1.65; }
+
+  /* ── Motto quote ── */
+  .motto-wrap {
+    text-align: center;
+    padding: 48px 24px 0;
+  }
+  .motto-wrap blockquote {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--txt-secondary);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.8;
+    position: relative;
+    padding: 0 40px;
+  }
+  .motto-wrap blockquote::before,
+  .motto-wrap blockquote::after {
+    content: '"';
+    position: absolute;
+    font-size: 4rem;
+    font-family: Georgia, serif;
+    background: var(--grad-main);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    opacity: .5;
+  }
+  .motto-wrap blockquote::before { left: 0; top: -10px; }
+  .motto-wrap blockquote::after  { right: 0; bottom: -30px; }
+
+  /* ── Mobile tweaks ── */
+  @media (max-width: 768px) {
+    .hero-actions { gap: 10px; }
+    .hero-actions .btn { font-size: .82rem; padding: 10px 18px; }
+    .objective-banner { padding: 24px 20px; }
+    .contact-info-card { padding: 22px 18px; }
+    .ach-grid { grid-template-columns: 1fr; }
+    .learning-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .learning-grid { grid-template-columns: 1fr; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
+  }
+  </style>
 </head>
-
 <body>
 
-<nav>
+<!-- ═══════════════════════════════════════════
+     LOADING SCREEN
+════════════════════════════════════════════ -->
+<div id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">ET</div>
+    <div class="loader-bar"><div class="loader-fill"></div></div>
+    <p class="loader-text">Initializing<span class="dots">...</span></p>
+  </div>
+</div>
 
-    <div class="logo">ELAVARASAN T</div>
+<!-- Custom cursor -->
+<div id="cursor-glow"></div>
 
-    <div class="menu-toggle" onclick="toggleMenu()">
-        ☰
-    </div>
+<!-- Particle canvas -->
+<canvas id="particles"></canvas>
 
-    <ul id="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-container">
+    <a href="#home" class="nav-logo">ET<span class="logo-dot">.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Journey</a></li>
+      <li><a href="#certifications">Certs</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
-
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
-<section id="home">
-    <div class="circle c1"></div>
-<div class="circle c2"></div>
-<div class="circle c3"></div>
 
-   <div class="hero-image">
+<!-- ═══════════════════════════════════════════
+     HERO
+════════════════════════════════════════════ -->
+<section id="home" class="hero">
+  <div class="hero-content">
 
-    <div class="floating-icon python">🐍</div>
-    <div class="floating-icon sql">🗄️</div>
-    <div class="floating-icon ai">🤖</div>
-    <div class="floating-icon cloud">☁️</div>
-
-    <img src="profile.jpeg"
-         alt="Elavarasan"
-         class="profile-img">
-
-</div>
-
-    <h1 class="name-animation" data-aos="zoom-in">
-        ELAVARASAN T <span class="heart">🤍</span>
-    </h1>
-
-    <p class="hero-description" data-aos="fade-up">
-        🚀 Available for Data Analytics & AI Opportunities
-    </p>
-
-    <h2 class="subtitle">
-        Data Analyst | Data Science Enthusiast
-    </h2>
-
-    <p class="hero-description">
-        Transforming Data into Actionable Insights through Analytics,
-        Artificial Intelligence, Machine Learning and Cloud Computing.
-    </p>
-
-    <div class="hero-buttons" data-aos="fade-up">
-        <a href="#projects" class="btn">🚀 View Projects</a>
-
-        <a href="resume.pdf" target="_blank" class="btn">
-            📄 Download Resume
-        </a>
-
-        <a href="https://github.com/elavarasan-ai"
-           target="_blank"
-           class="btn">
-           💻 GitHub Profile
-        </a>
+    <!-- Status badge -->
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      <span>🚀 Available for Data Analytics &amp; AI Opportunities</span>
     </div>
 
+    <!-- Profile -->
+    <div class="profile-wrapper">
+      <div class="profile-ring"></div>
+      <div class="profile-img">
+        <img src="https://elavarasan-ai.github.io/portfolio/profile.jpeg"
+             alt="Elavarasan T"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="profile-initials" style="display:none;">ET</div>
+      </div>
+      <!-- Floating tech icons -->
+      <div class="float-icon fi-1"><i class="fab fa-python"></i></div>
+      <div class="float-icon fi-2"><i class="fas fa-chart-bar"></i></div>
+      <div class="float-icon fi-3"><i class="fas fa-brain"></i></div>
+      <div class="float-icon fi-4"><i class="fab fa-react"></i></div>
+      <div class="float-icon fi-5"><i class="fab fa-google"></i></div>
+    </div>
+
+    <!-- Name -->
+    <h1 class="hero-name">Elavarasan <span class="gradient-text">T</span></h1>
+
+    <!-- Typing role -->
+    <div class="hero-role">
+      <span class="role-prefix">&gt;&nbsp;</span>
+      <span id="typed-text"></span>
+      <span class="cursor-blink">|</span>
+    </div>
+
+    <!-- Tagline -->
+    <p class="hero-desc">
+      Transforming Data into Actionable Insights through Analytics,<br />
+      Artificial Intelligence, Machine Learning and Cloud Computing.
+    </p>
+
+    <!-- Primary CTAs -->
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <i class="fas fa-rocket"></i> View Projects
+      </a>
+      <a href="resume.pdf" download class="btn btn-outline">
+        <i class="fas fa-file-arrow-down"></i> Download Resume
+      </a>
+    </div>
+
+    <!-- Secondary action buttons -->
+    <div class="hero-actions">
+      <a href="https://github.com/elavarasan-ai" target="_blank" rel="noopener" class="btn btn-outline">
+        <i class="fab fa-github"></i> GitHub
+      </a>
+      <a href="https://linkedin.com/in/elavarasan-t-91a218282" target="_blank" rel="noopener" class="btn btn-outline">
+        <i class="fab fa-linkedin-in"></i> LinkedIn
+      </a>
+      <a href="https://wa.me/918667883575" target="_blank" rel="noopener" class="btn btn-whatsapp">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="#contact" class="btn btn-outline">
+        <i class="fas fa-envelope"></i> Contact Me
+      </a>
+    </div>
+
+    <!-- Stats counters -->
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num" data-target="4">0</span>
+        <span class="stat-label">Projects</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="6">0</span>
+        <span class="stat-label">Certifications</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num" data-target="2">0</span>
+        <span class="stat-label">Internships</span>
+      </div>
+    </div>
+
+  </div><!-- /hero-content -->
+
+  <div class="scroll-cue">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-    <section id="about">
+<!-- ═══════════════════════════════════════════
+     ABOUT
+════════════════════════════════════════════ -->
+<section id="about" class="section">
+  <div class="container">
 
-    <h2>About Me</h2>
-
-    <p>
-        I am ELAVARASAN T, a B.Tech Information Technology student
-        at Varuvan Vadivelan Institute of Technology, affiliated with
-        Anna University.
-    </p>
-
-    <p>
-        I am passionate about Data Analytics, Data Science,
-        Artificial Intelligence, Machine Learning, and Cloud Computing.
-        I enjoy working with data to identify patterns, generate insights,
-        and solve real-world business problems through analytical approaches.
-    </p>
-
-    <p>
-        My technical expertise includes Python, SQL, Excel,
-        Pandas, NumPy, Matplotlib, Data Visualization,
-        Exploratory Data Analysis (EDA), and Machine Learning fundamentals.
-        I also work with tools such as Jupyter Notebook,
-        Google Colab, VS Code, Git, and GitHub.
-    </p>
-
-    <p>
-        Through internships in Generative AI and Cloud Computing,
-        I have gained practical exposure to AI workflows,
-        prompt engineering, cloud services, and deployment concepts.
-    </p>
-
-    <p>
-        My goal is to become a skilled Data Analyst and Data Scientist,
-        leveraging data-driven decision making and AI technologies
-        to build impactful solutions for businesses and society.
-    </p>
- <div class="about-stats">
-
-    <div class="stat-card">
-       <h3>
-    <span class="counter" data-target="4">0</span>+
-</h3>
-<p>Projects</p>
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Who I Am</span>
+      <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
     </div>
 
-    <div class="stat-card">
-        <h3>
-    <span class="counter" data-target="6">0</span>+
-</h3>
-<p>Certifications</p>
+    <div class="about-grid">
+
+      <!-- Text -->
+      <div class="about-text reveal">
+        <p>
+          I am <strong>Elavarasan T</strong>, a B.Tech Information Technology student at
+          <strong>Varuvan Vadivelan Institute of Technology</strong>, affiliated with
+          Anna University (2023 – 2027).
+        </p>
+        <p>
+          I am passionate about <span class="highlight">Data Analytics</span>,
+          <span class="highlight">Data Science</span>,
+          <span class="highlight">Artificial Intelligence</span>,
+          Machine Learning and Cloud Computing. I enjoy working with data to identify
+          patterns, generate insights and solve real-world business problems through
+          analytical approaches.
+        </p>
+        <p>
+          My technical toolkit includes Python, SQL, Excel, Pandas, NumPy, Matplotlib,
+          Exploratory Data Analysis and Machine Learning fundamentals. Through internships
+          in <strong>Generative AI</strong> and <strong>Cloud Computing</strong>, I have
+          gained practical exposure to AI workflows, prompt engineering and cloud services.
+        </p>
+        <p>
+          My goal is to become a skilled <strong>Data Analyst and Data Scientist</strong>,
+          leveraging data-driven decision making and AI technologies to build impactful
+          solutions.
+        </p>
+        <div class="about-info-grid">
+          <div class="info-chip"><i class="fas fa-graduation-cap"></i> CGPA: 7.8</div>
+          <div class="info-chip"><i class="fas fa-map-marker-alt"></i> Krishnagiri, TN</div>
+          <div class="info-chip"><i class="fab fa-python"></i> Python Enthusiast</div>
+          <div class="info-chip"><i class="fas fa-cloud"></i> Cloud Explorer</div>
+          <div class="info-chip"><i class="fas fa-phone"></i> +91 8667883575</div>
+          <div class="info-chip"><i class="fas fa-envelope"></i> elavarasantech08@gmail.com</div>
+        </div>
+      </div>
+
+      <!-- Visual cards -->
+      <div class="about-visual reveal">
+        <div class="about-card glass">
+          <div class="ac-icon"><i class="fas fa-database"></i></div>
+          <h4>Data Analytics</h4>
+          <p>Python · SQL · Excel · EDA</p>
+        </div>
+        <div class="about-card glass">
+          <div class="ac-icon"><i class="fas fa-chart-line"></i></div>
+          <h4>Data Science</h4>
+          <p>Pandas · NumPy · Matplotlib · ML</p>
+        </div>
+        <div class="about-card glass">
+          <div class="ac-icon"><i class="fas fa-cloud"></i></div>
+          <h4>Cloud &amp; Tools</h4>
+          <p>Google Cloud · Git · Jupyter · Colab</p>
+        </div>
+        <div class="about-card glass">
+          <div class="ac-icon"><i class="fas fa-robot"></i></div>
+          <h4>AI / ML</h4>
+          <p>Machine Learning · Generative AI · NLP</p>
+        </div>
+      </div>
+
+    </div><!-- /about-grid -->
+
+    <!-- Career Objective -->
+    <div class="objective-banner glass reveal" style="margin-top:48px;">
+      <span class="obj-label">Career Objective</span>
+      <p>
+        Aspiring <strong>Data Analyst</strong> and Data Science enthusiast with hands-on experience in
+        Python, Excel dashboards and data visualisation projects. Interested in solving
+        real-world business problems using data-driven approaches and continuously expanding
+        expertise in AI, Machine Learning and Analytics.
+      </p>
     </div>
 
-    <div class="stat-card">
-        <h3>
-    <span class="counter" data-target="2">0</span>+
-</h3>
-<p>Internships</p>
-    </div>
-
-</div>
-
+  </div>
 </section>
-<section id="objective">
 
-<h2>Career Objective</h2>
+<!-- ═══════════════════════════════════════════
+     SKILLS
+════════════════════════════════════════════ -->
+<section id="skills" class="section section-alt">
+  <div class="container">
 
-<p>
-Aspiring Data Analyst and Data Science enthusiast with hands-on experience in Python, Excel dashboards, and data visualization projects. Interested in solving real-world business problems using data-driven approaches and continuously expanding my expertise in AI, Machine Learning, and Analytics.
-</p>
-
-</section>
-
-    <section id="skills">
-
-<h2>Skills & Technologies</h2>
-
-<div class="project-container">
-
-    <div class="project-card" data-aos="fade-up">
-        <h3>💻 Programming</h3>
-        <p>Python, SQL, Java</p>
+    <div class="section-header reveal">
+      <span class="section-eyebrow">What I Know</span>
+      <h2 class="section-title">Skills &amp; <span class="gradient-text">Technologies</span></h2>
     </div>
 
-    <div class="project-card" data-aos="fade-up">
-        <h3>📊 Data Analytics</h3>
-        <p>Excel, Data Cleaning, EDA, Data Visualization</p>
-    </div>
-
-    <div class="project-card" data-aos="fade-up">
-        <h3>📚 Libraries</h3>
-        <p>Pandas, NumPy, Matplotlib</p>
-    </div>
-
-    <div class="project-card" data-aos="fade-up">
-        <h3>🛠 Tools</h3>
-        <p>Jupyter Notebook, Google Colab, VS Code, Git, GitHub</p>
-    </div>
-
-    <div class="project-card" data-aos="fade-up">
-        <h3>🤖 Technologies</h3>
-        <p>Machine Learning, Artificial Intelligence, Cloud Computing</p>
-    </div>
-
-</div>
-<div class="skill-progress">
     <div class="skills-grid">
 
-    <div class="skill-badge">🐍 Python</div>
-    <div class="skill-badge">🗄 SQL</div>
-    <div class="skill-badge">☕ Java</div>
-    <div class="skill-badge">📊 Excel</div>
-    <div class="skill-badge">🐼 Pandas</div>
-    <div class="skill-badge">🔢 NumPy</div>
-    <div class="skill-badge">📈 Matplotlib</div>
-    <div class="skill-badge">🤖 Machine Learning</div>
-    <div class="skill-badge">🧠 Artificial Intelligence</div>
-    <div class="skill-badge">☁ Cloud Computing</div>
-    <div class="skill-badge">📓 Jupyter Notebook</div>
-    <div class="skill-badge">💻 GitHub</div>
-
-</div>
-
-</section>
-
-  <section id="projects">
- <section id="certifications">
-
-    <h2>Certifications</h2>
-<p>
-Industry-recognized certifications in Data Science,
-Artificial Intelligence, Analytics, and Cloud Technologies.
-</p>
-    <div class="project-container">
-        <div class="project-card" data-aos="flip-left">
-    <h3>🏆 EBPL Internship on Generative AI</h3>
-    <p>AdroIT Technologies (Oracle Authorized Partner)</p>
-</div>
-
-<div class="project-card" data-aos="flip-left">
-    <h3>📊 Data Science Certification</h3>
-    
-    <p>
-        Successfully completed the Data Science Course
-        conducted by Softrixx Innovation.
-    </p>
-
-    <p>
-        <strong>Duration:</strong> Jan 2026 – May 2026
-    </p>
-
-    <p>
-        <strong>Organization:</strong> Softrixx Innovation
-    </p>
-</div>
-
-        <div class="project-card" data-aos="flip-left">
-            <h3>📊 Data Science – Coursera</h3>
+      <!-- Programming -->
+      <div class="skill-category glass reveal">
+        <h3 class="skill-cat-title"><i class="fas fa-terminal"></i> Programming</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Python</span><span>90%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>SQL</span><span>82%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Java</span><span>65%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="65"></div></div>
+          </div>
         </div>
-<div class="project-card" data-aos="flip-left">
-            <h3>🐍 Python Programming – Coursera</h3>
-        </div>
+      </div>
 
-        <div class="project-card" data-aos="flip-left">
-            <h3>💾 SQL Fundamentals for Data Analysts – Coursera</h3>
+      <!-- Data Analytics -->
+      <div class="skill-category glass reveal">
+        <h3 class="skill-cat-title"><i class="fas fa-chart-pie"></i> Data Analytics</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Excel &amp; Dashboards</span><span>85%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Data Visualisation</span><span>82%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>EDA / Data Cleaning</span><span>80%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+          </div>
         </div>
+      </div>
 
-        <div class="project-card" data-aos="flip-left">
-            <h3>🎯 Data Science Foundations – Oracle</h3>
+      <!-- Libraries -->
+      <div class="skill-category glass reveal">
+        <h3 class="skill-cat-title"><i class="fas fa-layer-group"></i> Libraries</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Pandas</span><span>88%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="88"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>NumPy</span><span>82%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="skill-label"><span>Matplotlib</span><span>78%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="78"></div></div>
+          </div>
         </div>
+      </div>
 
-      <div class="project-card" data-aos="flip-left">
-            <h3>📈 Advanced Excel – Naan Mudhalvan</h3>
+      <!-- Tools & Cloud -->
+      <div class="skill-category glass reveal">
+        <h3 class="skill-cat-title"><i class="fas fa-cloud-upload-alt"></i> Tools &amp; Cloud</h3>
+        <div class="tech-pills">
+          <span class="tech-pill"><i class="fab fa-google"></i> Google Cloud</span>
+          <span class="tech-pill"><i class="fab fa-git-alt"></i> Git</span>
+          <span class="tech-pill"><i class="fab fa-github"></i> GitHub</span>
+          <span class="tech-pill"><i class="fas fa-book-open"></i> Jupyter</span>
+          <span class="tech-pill"><i class="fas fa-flask"></i> Google Colab</span>
+          <span class="tech-pill"><i class="fas fa-table"></i> Excel</span>
+          <span class="tech-pill"><i class="fas fa-code"></i> VS Code</span>
+          <span class="tech-pill"><i class="fas fa-database"></i> MySQL</span>
         </div>
+      </div>
 
-       <div class="project-card" data-aos="flip-left">
-            <h3>🚀 Data Science Course Completion – Softrix Innovation, Bangalore</h3>
-        </div>
+    </div><!-- /skills-grid -->
 
+    <!-- Strengths -->
+    <div class="section-header reveal" style="margin-top:64px;margin-bottom:16px;">
+      <span class="section-eyebrow">Core Attributes</span>
+      <h2 class="section-title">My <span class="gradient-text">Strengths</span></h2>
+    </div>
+    <div class="strengths-row reveal">
+      <span class="strength-pill"><i class="fas fa-puzzle-piece"></i> Problem Solving</span>
+      <span class="strength-pill"><i class="fas fa-brain"></i> Analytical Thinking</span>
+      <span class="strength-pill"><i class="fas fa-users"></i> Team Collaboration</span>
+      <span class="strength-pill"><i class="fas fa-bolt"></i> Quick Learner</span>
+      <span class="strength-pill"><i class="fas fa-lightbulb"></i> Innovation Mindset</span>
     </div>
 
+  </div>
 </section>
-<section id="focus">
 
-<section id="learning">
+<!-- ═══════════════════════════════════════════
+     PROJECTS
+════════════════════════════════════════════ -->
+<section id="projects" class="section">
+  <div class="container">
 
-    <h2>🚀 Currently Learning</h2>
-
-    <div class="learning-container">
-
-        <div class="learning-card" data-aos="zoom-in">
-            <h3>🤖 Machine Learning</h3>
-            <p>Learning supervised and unsupervised learning techniques.</p>
-        </div>
-
-        <div class="learning-card" data-aos="zoom-in">
-            <h3>🧠 Natural Language Processing</h3>
-            <p>Working on text classification and Fake News Detection projects.</p>
-        </div>
-
-        <div class="learning-card" data-aos="zoom-in">
-            <h3>📊 Data Analytics</h3>
-            <p>Improving skills in EDA, visualization, and dashboard creation.</p>
-        </div>
-
-        <div class="learning-card" data-aos="zoom-in">
-            <h3>☁ Cloud Computing</h3>
-            <p>Exploring cloud services, deployment, and infrastructure concepts.</p>
-        </div>
-
-        <div class="learning-card">
-            <h3>✨ Generative AI</h3>
-            <p>Learning prompt engineering and AI-powered workflows.</p>
-        </div>
-
+    <div class="section-header reveal">
+      <span class="section-eyebrow">What I've Built</span>
+      <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
     </div>
 
+    <div class="projects-grid">
+
+      <!-- 1 · Fake News Detection -->
+      <div class="project-card glass reveal">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-newspaper"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/elavarasan-ai/fake-news" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <h3 class="project-title">Fake News Detection System</h3>
+        <p class="project-desc">
+          Developed a machine learning model to classify news articles as real or fake
+          using NLP, Python and data preprocessing techniques. Implements TF-IDF
+          vectorisation and classification algorithms.
+        </p>
+        <div class="project-features">
+          <span class="feature-tag">NLP</span>
+          <span class="feature-tag">TF-IDF</span>
+          <span class="feature-tag">Classification</span>
+          <span class="feature-tag">Data Preprocessing</span>
+        </div>
+        <div class="project-stack">
+          <span class="stack-badge">Python</span>
+          <span class="stack-badge">NLP</span>
+          <span class="stack-badge">Pandas</span>
+          <span class="stack-badge">Scikit-Learn</span>
+        </div>
+      </div>
+
+      <!-- 2 · Student Performance -->
+      <div class="project-card glass reveal">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-graduation-cap"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/elavarasan-ai" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <h3 class="project-title">Student Performance Analysis</h3>
+        <p class="project-desc">
+          Analysed student academic performance using Python, Pandas, Excel and
+          Matplotlib. Generated actionable insights through EDA and statistical analysis
+          to identify performance trends and improvement areas.
+        </p>
+        <div class="project-features">
+          <span class="feature-tag">EDA</span>
+          <span class="feature-tag">Data Cleaning</span>
+          <span class="feature-tag">Visualisation</span>
+          <span class="feature-tag">Trend Analysis</span>
+        </div>
+        <div class="project-stack">
+          <span class="stack-badge">Python</span>
+          <span class="stack-badge">Pandas</span>
+          <span class="stack-badge">NumPy</span>
+          <span class="stack-badge">Matplotlib</span>
+          <span class="stack-badge">Excel</span>
+        </div>
+      </div>
+
+      <!-- 3 · Sales Dashboard -->
+      <div class="project-card glass reveal">
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-chart-column"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/elavarasan-ai" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <h3 class="project-title">Sales Data Dashboard</h3>
+        <p class="project-desc">
+          Built an interactive Excel dashboard with Pivot Tables and dynamic charts
+          to visualise sales trends, KPIs and regional performance for business
+          decision-making.
+        </p>
+        <div class="project-features">
+          <span class="feature-tag">Pivot Tables</span>
+          <span class="feature-tag">KPI Tracking</span>
+          <span class="feature-tag">Dynamic Charts</span>
+          <span class="feature-tag">Business Insights</span>
+        </div>
+        <div class="project-stack">
+          <span class="stack-badge">Excel</span>
+          <span class="stack-badge">Pivot Tables</span>
+          <span class="stack-badge">Data Visualisation</span>
+        </div>
+      </div>
+
+      <!-- 4 · E-Commerce Cart -->
+      <div class="project-card glass reveal featured-card">
+        <div class="project-badge">Full-Stack</div>
+        <div class="project-header">
+          <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
+          <div class="project-links">
+            <a href="https://github.com/elavarasan-ai/commerce-card-systems" target="_blank" rel="noopener" aria-label="GitHub">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <h3 class="project-title">E-Commerce Cart System</h3>
+        <p class="project-desc">
+          Developed a shopping cart system with product management, add-to-cart
+          functionality, quantity updates and dynamic total calculation.
+          RESTful API integration with MongoDB backend.
+        </p>
+        <div class="project-features">
+          <span class="feature-tag">Add / Remove Cart</span>
+          <span class="feature-tag">Qty Update</span>
+          <span class="feature-tag">Dynamic Pricing</span>
+          <span class="feature-tag">REST API</span>
+        </div>
+        <div class="project-stack">
+          <span class="stack-badge">React.js</span>
+          <span class="stack-badge">Node.js</span>
+          <span class="stack-badge">Express.js</span>
+          <span class="stack-badge">MongoDB</span>
+        </div>
+      </div>
+
+    </div><!-- /projects-grid -->
+
+  </div>
 </section>
-<section id="journey">
 
-    <h2>🚀 My Journey</h2>
+<!-- ═══════════════════════════════════════════
+     EDUCATION & JOURNEY (TIMELINE)
+════════════════════════════════════════════ -->
+<section id="education" class="section section-alt">
+  <div class="container">
 
+    <div class="section-header reveal">
+      <span class="section-eyebrow">My Journey</span>
+      <h2 class="section-title">Education &amp; <span class="gradient-text">Experience</span></h2>
+    </div>
+
+    <!-- Mini journey cards -->
+    <div class="journey-grid reveal" style="margin-bottom:56px;">
+      <div class="journey-card glass">
+        <div class="journey-year">2023</div>
+        <p>Started B.Tech Information Technology at Varuvan Vadivelan Institute of Technology, Anna University.</p>
+      </div>
+      <div class="journey-card glass">
+        <div class="journey-year">2025</div>
+        <p>Completed Cloud Computing Internship and explored deployment &amp; cloud infrastructure concepts.</p>
+      </div>
+      <div class="journey-card glass">
+        <div class="journey-year">2025</div>
+        <p>Completed EPBL Generative AI Internship at AdroIT Technologies and learned Prompt Engineering.</p>
+      </div>
+      <div class="journey-card glass">
+        <div class="journey-year">2026</div>
+        <p>Completed Data Science Certification course &amp; built portfolio projects including Fake News Detection.</p>
+      </div>
+    </div>
+
+    <!-- Full timeline -->
     <div class="timeline">
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <h3>2023</h3>
-                <p>Started B.Tech Information Technology at Varuvan Vadivelan Institute of Technology.</p>
-            </div>
+      <!-- B.Tech -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot edu"></div>
+        <div class="timeline-content glass">
+          <span class="timeline-tag">Education</span>
+          <h3>B.Tech – Information Technology</h3>
+          <h4>Varuvan Vadivelan Institute of Technology</h4>
+          <p class="timeline-sub">Anna University Affiliated</p>
+          <div class="timeline-meta">
+            <span><i class="far fa-calendar"></i> 2023 – 2027</span>
+            <span class="cgpa-badge">CGPA: 7.8</span>
+          </div>
+          <p class="timeline-desc">
+            Focused on Data Science, AI, Machine Learning and full-stack web development.
+            Active participant in technical symposiums, research paper presentations and
+            project-based learning initiatives.
+          </p>
         </div>
+      </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <h3>2025</h3>
-                <p>Completed Cloud Computing Internship and explored deployment concepts.</p>
-            </div>
+      <!-- EPBL Generative AI Internship -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot intern"></div>
+        <div class="timeline-content glass">
+          <span class="timeline-tag internship">Internship</span>
+          <h3>EPBL Internship – Generative AI</h3>
+          <h4>AdroIT Technologies (Oracle Authorized Partner)</h4>
+          <div class="timeline-meta">
+            <span><i class="far fa-calendar"></i> Oct 2025</span>
+            <span class="duration-badge">2 Weeks</span>
+          </div>
+          <p class="timeline-desc">
+            Learned Prompt Engineering, AI Workflows, Generative AI Concepts and
+            Real-World AI Applications. Gained exposure to Oracle-authorized AI tools
+            and industry-grade generative AI pipelines.
+          </p>
+          <div class="timeline-skills">
+            <span>Prompt Engineering</span>
+            <span>Generative AI</span>
+            <span>AI Workflows</span>
+            <span>Oracle Tools</span>
+          </div>
         </div>
+      </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <h3>2025</h3>
-                <p>Completed EPBL Generative AI Internship and learned Prompt Engineering.</p>
-            </div>
+      <!-- Cloud Computing Internship -->
+      <div class="timeline-item reveal">
+        <div class="timeline-dot intern"></div>
+        <div class="timeline-content glass">
+          <span class="timeline-tag internship">Internship</span>
+          <h3>Cloud Computing Internship</h3>
+          <h4>Cloud Technology Program</h4>
+          <div class="timeline-meta">
+            <span><i class="far fa-calendar"></i> Jan 2026 – Apr 2026</span>
+            <span class="duration-badge">4 Months</span>
+          </div>
+          <p class="timeline-desc">
+            Gained knowledge in cloud computing fundamentals, cloud services,
+            deployment concepts and application management on cloud infrastructure.
+          </p>
+          <div class="timeline-skills">
+            <span>Google Cloud</span>
+            <span>Cloud Infrastructure</span>
+            <span>Deployment</span>
+            <span>Cloud Services</span>
+          </div>
         </div>
+      </div>
 
-        <div class="timeline-item">
-            <div class="timeline-content">
-                <h3>2026</h3>
-                <p>Completed Data Science Certification and built portfolio projects.</p>
-            </div>
-        </div>
+    </div><!-- /timeline -->
 
+    <!-- Achievements -->
+    <div class="section-header reveal" style="margin-top:72px;margin-bottom:32px;">
+      <span class="section-eyebrow">Recognition</span>
+      <h2 class="section-title">Achievements &amp; <span class="gradient-text">Activities</span></h2>
     </div>
 
-</section>
-
-
-<section>
-
-    <h2> 🚀 Explore Project</h2>
-
-    <div class="project-card" data-aos="fade-up">
-    <h3>📰 Fake News Detection System</h3>
-
-    <p>
-        Developed a machine learning model to classify
-        news articles as real or fake using NLP,
-        Python, and data preprocessing techniques.
-    </p>
-
-    <p><strong>Tools:</strong> Python, NLP, Pandas, Scikit-Learn</p>
-
-    <a href="https://github.com/elavarasan-ai/fake-news"
-       target="_blank"
-       class="btn">
-       💻 View Project
-    </a>
-</div>
-
-    <div class="project-card" data-aos="fade-up">
-    <h3>📊 Student Performance Analysis</h3>
-
-    <p>
-        Analyzed student academic performance using Python,
-        Pandas, Excel and Matplotlib.
-    </p>
-
-    <p><strong>Tools:</strong> Python, Pandas, Excel, Matplotlib</p>
-</div>
-
-        <div class="project-card" data-aos="fade-up">
-    <h3>📈 Sales Dashboard</h3>
-
-    <p>
-        Built an interactive Excel dashboard with
-        Pivot Tables and Charts.
-    </p>
-
-    <p><strong>Tools:</strong> Excel, Pivot Tables, Charts</p>
-</div>
-
-    <div class="project-card" data-aos="fade-up">
-    <h3>🛒 E-Commerce Cart System</h3>
-
-    <p>
-        Developed a shopping cart system with product
-        management, add-to-cart functionality, quantity updates,
-        and dynamic total calculation.
-    </p>
-
-    <p><strong>Tools:</strong> JavaScript, React, Node.js, Express.js, MongoDB</p>
-
-    <a href="https://github.com/elavarasan-ai/commerce-card-systems"
-       target="_blank"
-       class="btn">
-       💻 GitHub Repository
-    </a>
-</div>
-
+    <div class="ach-grid">
+      <div class="ach-card glass reveal">
+        <div class="ach-icon"><i class="fas fa-file-alt"></i></div>
+        <div class="ach-body">
+          <h4>Research Paper Presentation</h4>
+          <p>Presented a research paper on <em>Applications of Artificial Intelligence in Data Analytics</em> at department-level forum.</p>
+        </div>
+      </div>
+      <div class="ach-card glass reveal">
+        <div class="ach-icon"><i class="fas fa-users-cog"></i></div>
+        <div class="ach-body">
+          <h4>Assistant Coordinator</h4>
+          <p>Served as Assistant Coordinator for the Department Technical Symposium — managed event planning and execution.</p>
+        </div>
+      </div>
+      <div class="ach-card glass reveal">
+        <div class="ach-icon"><i class="fas fa-palette"></i></div>
+        <div class="ach-body">
+          <h4>Fine Arts Club Member</h4>
+          <p>Active member of the college Fine Arts Club, contributing to cultural and creative activities.</p>
+        </div>
+      </div>
     </div>
 
+    <!-- Extra Activities -->
+    <div class="section-header reveal" style="margin-top:56px;margin-bottom:8px;">
+      <span class="section-eyebrow">Beyond Code</span>
+      <h2 class="section-title">Extra <span class="gradient-text">Activities</span></h2>
+    </div>
+    <div class="activities-row reveal">
+      <span class="activity-chip"><i class="fas fa-chess-knight"></i> Chess</span>
+      <span class="activity-chip"><i class="fas fa-futbol"></i> Football</span>
+      <span class="activity-chip"><i class="fas fa-baseball-bat-ball"></i> Cricket</span>
+    </div>
+
+  </div>
 </section>
-<section id="experience">
 
-    <h2>Internship Experience</h2>
+<!-- ═══════════════════════════════════════════
+     CERTIFICATIONS
+════════════════════════════════════════════ -->
+<section id="certifications" class="section">
+  <div class="container">
 
-      <div class="project-card" data-aos="fade-up">
-    <h3>🤖 EBPL Internship – Generative AI</h3>
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Credentials</span>
+      <h2 class="section-title">Certifications &amp; <span class="gradient-text">Achievements</span></h2>
+    </div>
 
-    <p>
-        Successfully completed a Generative AI Internship
-        conducted by AdroIT Technologies (Oracle Authorized Partner).
-    </p>
+    <div class="certs-grid">
 
-    <p>
-        Learned Prompt Engineering, AI Workflows,
-        Generative AI Concepts, and Real-World AI Applications.
-    </p>
+      <div class="cert-card glass reveal">
+        <div class="cert-icon google"><i class="fab fa-google"></i></div>
+        <div class="cert-body">
+          <h4>EPBL Generative AI Internship</h4>
+          <p>Prompt Engineering, AI Workflows and Generative AI Concepts</p>
+          <span class="cert-issuer">AdroIT Technologies · Oracle Partner</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
 
-    <p>
-        <strong>Duration:</strong> 08-10-2025 to 23-10-2025
-    </p>
-</div>
+      <div class="cert-card glass reveal">
+        <div class="cert-icon ds"><i class="fas fa-chart-line"></i></div>
+        <div class="cert-body">
+          <h4>Data Science – Coursera</h4>
+          <p>End-to-end Data Science workflows, EDA and predictive modelling</p>
+          <span class="cert-issuer">Coursera</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
 
-        <div class="project-card" data-aos="fade-right">
-            <h3>☁ Cloud Computing Internship</h3>
-            <p>
-                Gained knowledge in cloud computing fundamentals,
-                cloud services, deployment concepts, and application management.
-            </p>
+      <div class="cert-card glass reveal">
+        <div class="cert-icon ibm"><i class="fab fa-python"></i></div>
+        <div class="cert-body">
+          <h4>Python Programming – Coursera</h4>
+          <p>Core Python, OOP, file handling and data manipulation</p>
+          <span class="cert-issuer">Coursera</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
+
+      <div class="cert-card glass reveal">
+        <div class="cert-icon excel"><i class="fas fa-database"></i></div>
+        <div class="cert-body">
+          <h4>SQL Fundamentals for Data Analysts</h4>
+          <p>Queries, joins, aggregations and database management</p>
+          <span class="cert-issuer">Coursera</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
+
+      <div class="cert-card glass reveal">
+        <div class="cert-icon ds"><i class="fas fa-brain"></i></div>
+        <div class="cert-body">
+          <h4>Data Science Foundations</h4>
+          <p>Oracle-certified Data Science foundations and methodologies</p>
+          <span class="cert-issuer">Oracle</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
+
+      <div class="cert-card glass reveal">
+        <div class="cert-icon excel"><i class="fas fa-table"></i></div>
+        <div class="cert-body">
+          <h4>Advanced Excel</h4>
+          <p>Pivot tables, dashboards, macros and data analysis functions</p>
+          <span class="cert-issuer">Naan Mudhalvan</span>
+        </div>
+        <div class="cert-badge verified"><i class="fas fa-check-circle"></i> Verified</div>
+      </div>
+
+    </div><!-- /certs-grid -->
+
+    <!-- Currently Learning -->
+    <div class="section-header reveal" style="margin-top:72px;margin-bottom:32px;">
+      <span class="section-eyebrow">Always Growing</span>
+      <h2 class="section-title">Currently <span class="gradient-text">Learning</span></h2>
+    </div>
+
+    <div class="learning-grid">
+      <div class="learn-card glass reveal">
+        <div class="learn-icon"><i class="fas fa-robot"></i></div>
+        <h4>Machine Learning</h4>
+        <p>Supervised &amp; unsupervised learning, model evaluation and tuning.</p>
+      </div>
+      <div class="learn-card glass reveal">
+        <div class="learn-icon"><i class="fas fa-comments"></i></div>
+        <h4>Natural Language Processing</h4>
+        <p>Text classification, sentiment analysis and Fake News Detection.</p>
+      </div>
+      <div class="learn-card glass reveal">
+        <div class="learn-icon"><i class="fas fa-chart-bar"></i></div>
+        <h4>Data Analytics</h4>
+        <p>EDA, advanced visualisation and interactive dashboard creation.</p>
+      </div>
+      <div class="learn-card glass reveal">
+        <div class="learn-icon"><i class="fas fa-cloud"></i></div>
+        <h4>Cloud Computing</h4>
+        <p>Cloud services, deployment pipelines and infrastructure concepts.</p>
+      </div>
+      <div class="learn-card glass reveal">
+        <div class="learn-icon"><i class="fas fa-magic"></i></div>
+        <h4>Generative AI</h4>
+        <p>Prompt engineering and AI-powered workflows &amp; applications.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+════════════════════════════════════════════ -->
+<section id="contact" class="section section-alt">
+  <div class="container">
+
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Let's Talk</span>
+      <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+      <p class="section-sub">
+        Open to internships, data analytics roles, collaborations and interesting projects.
+        Let's build something together.
+      </p>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Links column -->
+      <div class="contact-info reveal">
+
+        <a href="mailto:elavarasantech08@gmail.com" class="contact-link glass">
+          <div class="cl-icon"><i class="fas fa-envelope"></i></div>
+          <div class="cl-body">
+            <span class="cl-label">Email</span>
+            <span class="cl-value">elavarasantech08@gmail.com</span>
+          </div>
+          <i class="fas fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a href="tel:+918667883575" class="contact-link glass">
+          <div class="cl-icon"><i class="fas fa-phone"></i></div>
+          <div class="cl-body">
+            <span class="cl-label">Phone</span>
+            <span class="cl-value">+91 8667883575</span>
+          </div>
+          <i class="fas fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a href="https://wa.me/918667883575" target="_blank" rel="noopener" class="contact-link glass">
+          <div class="cl-icon" style="background:linear-gradient(135deg,#25d366,#128c3e);box-shadow:0 6px 20px rgba(37,211,102,.3);">
+            <i class="fab fa-whatsapp"></i>
+          </div>
+          <div class="cl-body">
+            <span class="cl-label">WhatsApp</span>
+            <span class="cl-value">Message me on WhatsApp</span>
+          </div>
+          <i class="fas fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a href="https://github.com/elavarasan-ai" target="_blank" rel="noopener" class="contact-link glass">
+          <div class="cl-icon" style="background:linear-gradient(135deg,#333,#555);box-shadow:0 6px 20px rgba(0,0,0,.4);">
+            <i class="fab fa-github"></i>
+          </div>
+          <div class="cl-body">
+            <span class="cl-label">GitHub</span>
+            <span class="cl-value">github.com/elavarasan-ai</span>
+          </div>
+          <i class="fas fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <a href="https://linkedin.com/in/elavarasan-t-91a218282" target="_blank" rel="noopener" class="contact-link glass">
+          <div class="cl-icon linkedin"><i class="fab fa-linkedin-in"></i></div>
+          <div class="cl-body">
+            <span class="cl-label">LinkedIn</span>
+            <span class="cl-value">linkedin.com/in/elavarasan-t</span>
+          </div>
+          <i class="fas fa-arrow-right cl-arrow"></i>
+        </a>
+
+        <!-- Contact info card -->
+        <div class="contact-info-card glass">
+          <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <div class="cinfo-label">Email</div>
+              <div class="cinfo-value"><a href="mailto:elavarasantech08@gmail.com">elavarasantech08@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><i class="fas fa-phone"></i></div>
+            <div>
+              <div class="cinfo-label">Mobile</div>
+              <div class="cinfo-value"><a href="tel:+918667883575">+91 8667883575</a></div>
+            </div>
+          </div>
+          <div class="cinfo-row">
+            <div class="cinfo-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <div class="cinfo-label">Location</div>
+              <div class="cinfo-value">Krishnagiri, Tamil Nadu, India</div>
+            </div>
+          </div>
         </div>
 
+      </div><!-- /contact-info -->
+
+      <!-- CTA card -->
+      <div class="contact-cta glass reveal">
+        <div class="cta-inner">
+          <div class="cta-icon"><i class="fas fa-rocket"></i></div>
+          <h3>Ready to collaborate?</h3>
+          <p>
+            Whether you have a data analytics project, an internship opportunity
+            or just want to chat about AI and data — my inbox is always open.
+          </p>
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%;">
+            <a href="mailto:elavarasantech08@gmail.com" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Send a Message
+            </a>
+            <a href="https://wa.me/918667883575" target="_blank" rel="noopener" class="btn btn-whatsapp">
+              <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+            </a>
+            <a href="resume.pdf" download class="btn btn-outline">
+              <i class="fas fa-file-arrow-down"></i> Download Resume
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /contact-grid -->
+
+    <!-- Personal Motto -->
+    <div class="motto-wrap reveal">
+      <blockquote>
+        Turning Data into Decisions Through Analytics, Innovation and Continuous Learning.
+      </blockquote>
     </div>
 
-</section>
-   <section id="contact">
-
-    <h2>Contact Me</h2>
-    <div class="contact-buttons">
-
-    <a href="tel:+918667883575" class="social-btn">
-        📱 Call Me
-    </a>
-
-    <a href="mailto:elavarasantech08@gmail.com" class="social-btn">
-        📧 Email Me
-    </a>
-
-    <a href="https://github.com/elavarasan-ai" target="_blank" class="social-btn">
-        💻 GitHub
-    </a>
-
-    <a href="https://linkedin.com/in/elavarasan-t-91a218282" target="_blank" class="social-btn">
-        🔗 LinkedIn
-    </a>
-
-    <a href="https://www.instagram.com/black._.sha.dow" target="_blank" class="social-btn">
-        📸 Instagram
-    </a>
-
-</div>
-  
-<div class="project-card" data-aos="fade-up">
-    <h3>📞 Contact Information</h3>
-
-    <p><strong>📧 Email:</strong><br>
-    elavarasantech08@gmail.com</p>
-
-    <p><strong>📱 Mobile:</strong><br>
-    +91 8667883575</p>
-
-    <p><strong>📍 Location:</strong><br>
-    Krishnagiri, Tamil Nadu</p>
-</div>
+  </div>
 </section>
 
-    <script src="script.js"></script>
-    <section id="quote">
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-inner">
 
-    <h2>💡 Personal Motto</h2>
+      <div class="footer-logo">ET<span class="logo-dot">.</span></div>
 
-    <div class="project-card">
-        <p>
-            "Turning Data into Decisions Through Analytics,
-            Innovation and Continuous Learning."
+      <div style="text-align:center;">
+        <p class="footer-copy">
+          Designed &amp; built by <span class="gradient-text">Elavarasan T</span> · 2026
         </p>
+        <p style="font-size:.78rem;color:var(--txt-muted);margin-top:4px;">
+          Data Analyst | Data Science Enthusiast | AI &amp; Machine Learning Learner
+        </p>
+        <p style="font-size:.75rem;color:var(--txt-muted);margin-top:2px;">
+          📧 elavarasantech08@gmail.com &nbsp;|&nbsp; 📍 Krishnagiri, Tamil Nadu, India
+        </p>
+      </div>
+
+      <div class="footer-socials">
+        <a href="mailto:elavarasantech08@gmail.com" aria-label="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+        <a href="tel:+918667883575" aria-label="Phone">
+          <i class="fas fa-phone"></i>
+        </a>
+        <a href="https://wa.me/918667883575" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://github.com/elavarasan-ai" target="_blank" rel="noopener" aria-label="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="https://linkedin.com/in/elavarasan-t-91a218282" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://www.instagram.com/black._.sha.dow" target="_blank" rel="noopener" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+
     </div>
-
-</section>  
-    <footer>
-
-    <h3>ELAVARASAN T 🤍</h3>
-
-    <p>
-        Data Analyst | Data Science Enthusiast |
-        AI & Machine Learning Learner
+    <p style="text-align:center;margin-top:24px;font-size:.75rem;color:var(--txt-muted);">
+      © 2026 Elavarasan T. All Rights Reserved.
     </p>
-
-    <div class="footer-links">
-
-        <a href="https://github.com/elavarasan-ai" target="_blank">
-            💻 GitHub
-        </a>
-
-        <a href="https://linkedin.com/in/elavarasan-t-91a218282" target="_blank">
-            🔗 LinkedIn
-        </a>
-
-        <a href="https://www.instagram.com/black._.sha.dow" target="_blank">
-            📸 Instagram
-        </a>
-
-    </div>
-
-    <p>
-        📧 elavarasantech08@gmail.com
-    </p>
-
-    <p>
-        © 2026 ELAVARASAN T. All Rights Reserved.
-    </p>
-
+  </div>
 </footer>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-<script>
-AOS.init({
-    duration:1000,
-    once:true
-});
-</script>
+<!-- Back to Top -->
+<button id="backToTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+<!-- Script -->
 <script src="script.js"></script>
-<button id="topBtn" onclick="topFunction()">
-    ⬆
-</button>
 </body>
-
 </html>
