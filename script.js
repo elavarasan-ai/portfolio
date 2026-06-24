@@ -1,654 +1,571 @@
 /* ================================================================
-   ELAVARASAN T – ADVANCED PORTFOLIO SCRIPTS
-   Version 2.0 | GitHub Pages Optimised
+   ELAVARASAN T – PREMIUM PORTFOLIO SCRIPTS v3.0
+   Recruiter-friendly · 60fps · Mobile-safe
    ================================================================ */
- 
 'use strict';
- 
-/* ----------------------------------------------------------------
-   UTILITY HELPERS
-   ---------------------------------------------------------------- */
-const $  = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
- 
-const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
- 
-function onReady(fn) {
-  if (document.readyState !== 'loading') fn();
-  else document.addEventListener('DOMContentLoaded', fn);
-}
- 
-/* ----------------------------------------------------------------
+
+/* ── Helpers ── */
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const isMobile = () => window.innerWidth <= 768 || window.matchMedia('(hover:none)').matches;
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/* ================================================================
    1. LOADING SCREEN
-   ---------------------------------------------------------------- */
+   ================================================================ */
 const Loader = (() => {
-  const loader = $('#loader');
- 
+  const el = $('#loader');
+
   function hide() {
-    loader.classList.add('hidden');
-    document.body.style.cursor = 'none';
-    // Kick off all entrance animations
+    el.classList.add('hidden');
+    // stagger entrance of body elements
+    document.body.classList.add('js-ready');
     Particles.init();
     ScrollReveal.init();
     HeroStats.init();
+    ExpStats.init();
     TypeWriter.init();
   }
- 
+
   function init() {
-    // Wait for fill animation (2.1s) + slight grace
-    const minDelay = 2400;
-    const loaded   = new Promise(resolve => {
-      if (document.readyState === 'complete') resolve();
-      else window.addEventListener('load', resolve);
+    const loaded = new Promise(r => {
+      if (document.readyState === 'complete') r(); else window.addEventListener('load', r);
     });
-    const delay = new Promise(resolve => setTimeout(resolve, minDelay));
- 
-    Promise.all([loaded, delay]).then(hide);
+    Promise.all([loaded, new Promise(r => setTimeout(r, 2400))]).then(hide);
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
+
+/* ================================================================
    2. CUSTOM CURSOR
-   ---------------------------------------------------------------- */
+   ================================================================ */
 const Cursor = (() => {
   const glow = $('#cursor-glow');
   let dot;
-  const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
- 
-  function createDot() {
+
+  function make() {
     dot = document.createElement('div');
     dot.id = 'cursor-dot';
     document.body.appendChild(dot);
   }
- 
-  function moveCursor(e) {
+
+  function move(e) {
     const x = e.clientX, y = e.clientY;
-    if (glow) glow.style.transform = `translate(calc(${x}px - 50%), calc(${y}px - 50%))`;
+    if (glow) glow.style.transform = `translate(calc(${x}px - 50%),calc(${y}px - 50%))`;
     if (dot)  { dot.style.left = x + 'px'; dot.style.top = y + 'px'; }
   }
- 
-  function onEnter() { dot && dot.classList.add('hovering');    }
-  function onLeave() { dot && dot.classList.remove('hovering'); }
- 
-  function bindHoverTargets() {
-    const targets = 'a, button, .project-card, .cert-card, .contact-link, .about-card, .tech-pill, .info-chip, .btn';
-    $$(targets).forEach(el => {
-      el.addEventListener('mouseenter', onEnter);
-      el.addEventListener('mouseleave', onLeave);
+
+  function bindTargets() {
+    $$('a,button,.project-card,.cert-card,.contact-link,.about-card,.tech-pill,.info-chip,.btn,.exp-stat-card,.learn-card,.ach-card').forEach(el => {
+      el.addEventListener('mouseenter', () => dot?.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => dot?.classList.remove('hovering'));
     });
   }
- 
+
   function init() {
-    if (isTouchDevice()) return;
-    createDot();
-    document.addEventListener('mousemove', moveCursor, { passive: true });
-    bindHoverTargets();
+    if (isMobile()) return;
+    make();
+    document.addEventListener('mousemove', move, { passive: true });
+    bindTargets();
   }
- 
-  return { init, bindHoverTargets };
+
+  return { init, bindTargets };
 })();
- 
-/* ----------------------------------------------------------------
+
+/* ================================================================
    3. PARTICLE SYSTEM
-   ---------------------------------------------------------------- */
+   ================================================================ */
 const Particles = (() => {
   const canvas = $('#particles');
-  const ctx    = canvas ? canvas.getContext('2d') : null;
-  let   width, height, particles = [], raf;
- 
-  const CONFIG = {
-    count:      0,       // computed from viewport
-    maxDist:    130,
-    speed:      0.35,
-    minSize:    0.5,
-    maxSize:    2.0,
-    colors:     ['108,99,255', '0,212,255', '168,85,247'],
-  };
- 
-  class Particle {
+  const ctx    = canvas?.getContext('2d');
+  let w, h, list = [], raf;
+
+  const cfg = { maxDist: 120, speed: 0.32, colors: ['108,99,255','0,212,255','168,85,247'] };
+
+  class P {
     constructor() { this.reset(true); }
- 
-    reset(initial = false) {
-      this.x       = Math.random() * width;
-      this.y       = initial ? Math.random() * height : (Math.random() > 0.5 ? -5 : height + 5);
-      this.vx      = (Math.random() - 0.5) * CONFIG.speed;
-      this.vy      = (Math.random() - 0.5) * CONFIG.speed;
-      this.size    = Math.random() * (CONFIG.maxSize - CONFIG.minSize) + CONFIG.minSize;
-      this.opacity = Math.random() * 0.55 + 0.1;
-      this.color   = CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
-      this.pulse   = Math.random() * Math.PI * 2; // phase offset
+    reset(init) {
+      this.x  = Math.random() * w;
+      this.y  = init ? Math.random() * h : (Math.random() > .5 ? -6 : h + 6);
+      this.vx = (Math.random() - .5) * cfg.speed;
+      this.vy = (Math.random() - .5) * cfg.speed;
+      this.r  = Math.random() * 1.5 + .4;
+      this.ph = Math.random() * Math.PI * 2;
+      this.c  = cfg.colors[~~(Math.random() * 3)];
     }
- 
     update() {
-      this.x      += this.vx;
-      this.y      += this.vy;
-      this.pulse  += 0.018;
-      this.opacity = 0.15 + Math.sin(this.pulse) * 0.2;
- 
-      if (this.x < -10 || this.x > width + 10 ||
-          this.y < -10 || this.y > height + 10) {
-        this.reset();
-      }
+      this.x += this.vx; this.y += this.vy; this.ph += .016;
+      if (this.x < -8 || this.x > w+8 || this.y < -8 || this.y > h+8) this.reset();
     }
- 
     draw() {
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${this.color}, ${this.opacity})`;
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(${this.c},${.1 + Math.sin(this.ph)*.2})`;
       ctx.fill();
     }
   }
- 
-  function drawConnections() {
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx   = particles[i].x - particles[j].x;
-        const dy   = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
- 
-        if (dist < CONFIG.maxDist) {
-          const alpha = (1 - dist / CONFIG.maxDist) * 0.14;
+
+  function connections() {
+    for (let i = 0; i < list.length; i++) {
+      for (let j = i+1; j < list.length; j++) {
+        const dx = list[i].x - list[j].x, dy = list[i].y - list[j].y;
+        const d  = Math.sqrt(dx*dx + dy*dy);
+        if (d < cfg.maxDist) {
           ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(108,99,255,${alpha})`;
-          ctx.lineWidth   = 0.6;
+          ctx.moveTo(list[i].x, list[i].y);
+          ctx.lineTo(list[j].x, list[j].y);
+          ctx.strokeStyle = `rgba(108,99,255,${(1-d/cfg.maxDist)*.13})`;
+          ctx.lineWidth = .5;
           ctx.stroke();
         }
       }
     }
   }
- 
+
   function resize() {
     if (!canvas) return;
-    width  = canvas.width  = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    CONFIG.count = clamp(Math.floor(width / 14), 40, 100);
- 
-    if (particles.length !== CONFIG.count) {
-      while (particles.length > CONFIG.count) particles.pop();
-      while (particles.length < CONFIG.count) particles.push(new Particle());
-    }
+    w = canvas.width  = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    const n = clamp(~~(w/14), 35, 90);
+    while (list.length > n) list.pop();
+    while (list.length < n) list.push(new P());
   }
- 
+
   function loop() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => { p.update(); p.draw(); });
-    drawConnections();
+    ctx.clearRect(0, 0, w, h);
+    list.forEach(p => { p.update(); p.draw(); });
+    connections();
     raf = requestAnimationFrame(loop);
   }
- 
+
   function init() {
     if (!canvas || !ctx) return;
     resize();
     loop();
     window.addEventListener('resize', resize, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) cancelAnimationFrame(raf); else loop();
+    });
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   4. NAVBAR
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   4. NAVBAR – hide on scroll down, reappear on scroll up
+   ================================================================ */
 const Navbar = (() => {
-  const nav       = $('#navbar');
-  const hamburger = $('#hamburger');
-  const navLinks  = $('#navLinks');
-  const links     = $$('#navLinks a');
-  let   isOpen    = false;
- 
+  const nav  = $('#navbar');
+  const ham  = $('#hamburger');
+  const list = $('#navLinks');
+  let   open = false, lastY = 0, ticking = false;
+
   function onScroll() {
-    nav.classList.toggle('scrolled', window.scrollY > 30);
-    BackToTop.update();
-    updateActiveLink();
+    if (ticking) return;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 30);
+      // hide/show
+      if (y > lastY && y > 120) {
+        nav.classList.add('nav-hidden');
+        if (open) closeMenu();
+      } else {
+        nav.classList.remove('nav-hidden');
+      }
+      lastY = y;
+      ticking = false;
+      BackToTop.update();
+      updateActive();
+    });
+    ticking = true;
   }
- 
-  function toggleMenu() {
-    isOpen = !isOpen;
-    hamburger.classList.toggle('active', isOpen);
-    navLinks.classList.toggle('open',    isOpen);
-    hamburger.setAttribute('aria-expanded', isOpen);
-  }
- 
+
   function closeMenu() {
-    if (!isOpen) return;
-    isOpen = false;
-    hamburger.classList.remove('active');
-    navLinks.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', false);
+    open = false;
+    ham.classList.remove('active');
+    list.classList.remove('open');
+    ham.setAttribute('aria-expanded', false);
   }
- 
-  function updateActiveLink() {
-    const sections = $$('section[id]');
-    let current    = '';
-    const offset   = window.innerHeight * 0.35;
- 
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - offset) current = sec.id;
-    });
- 
-    links.forEach(a => {
-      const match = a.getAttribute('href') === `#${current}`;
-      a.classList.toggle('active', match);
-    });
+
+  function updateActive() {
+    const secs = $$('section[id]');
+    let cur = '';
+    secs.forEach(s => { if (window.scrollY >= s.offsetTop - window.innerHeight*.35) cur = s.id; });
+    $$('#navLinks a').forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${cur}`));
   }
- 
-  function smoothScrollLinks() {
-    $$('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = $(a.getAttribute('href'));
-        if (!target) return;
-        e.preventDefault();
-        closeMenu();
-        setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }, isOpen ? 320 : 0);
-      });
-    });
-  }
- 
+
   function init() {
     if (!nav) return;
     window.addEventListener('scroll', onScroll, { passive: true });
-    hamburger && hamburger.addEventListener('click', toggleMenu);
- 
-    // Close on outside click
-    document.addEventListener('click', e => {
-      if (isOpen && !nav.contains(e.target)) closeMenu();
+    ham?.addEventListener('click', () => {
+      open = !open;
+      ham.classList.toggle('active', open);
+      list.classList.toggle('open', open);
+      ham.setAttribute('aria-expanded', open);
     });
- 
-    // Close on ESC
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeMenu();
+    document.addEventListener('click', e => { if (open && !nav.contains(e.target)) closeMenu(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+    // smooth scroll
+    $$('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = $(a.getAttribute('href'));
+        if (!t) return;
+        e.preventDefault();
+        closeMenu();
+        setTimeout(() => t.scrollIntoView({ behavior: 'smooth' }), open ? 300 : 0);
+      });
     });
- 
-    smoothScrollLinks();
-    onScroll(); // run once
+    onScroll();
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
+
+/* ================================================================
    5. TYPING EFFECT
-   ---------------------------------------------------------------- */
+   ================================================================ */
 const TypeWriter = (() => {
-  const el     = $('#typed-text');
+  const el = $('#typed-text');
   const phrases = [
-    'Aspiring Data Analyst',
-    'Data Scientist',
-    'AI Enthusiast',
+    'Data Analyst',
+    'Data Science Enthusiast',
+    'AI Learner',
     'Python Developer',
     'ML Explorer',
     'Cloud Technologist',
   ];
- 
-  let phraseIdx  = 0;
-  let charIdx    = 0;
-  let deleting   = false;
-  let timer      = null;
- 
+  let pi = 0, ci = 0, del = false;
+
   function tick() {
-    const phrase  = phrases[phraseIdx];
-    const display = deleting
-      ? phrase.substring(0, charIdx - 1)
-      : phrase.substring(0, charIdx + 1);
- 
-    el.textContent = display;
-    charIdx = deleting ? charIdx - 1 : charIdx + 1;
- 
-    let delay = deleting ? 45 : 85;
- 
-    if (!deleting && display === phrase) {
-      delay    = 2000;
-      deleting = true;
-    } else if (deleting && display === '') {
-      deleting   = false;
-      phraseIdx  = (phraseIdx + 1) % phrases.length;
-      charIdx    = 0;
-      delay      = 350;
-    }
- 
-    timer = setTimeout(tick, delay);
+    const phrase = phrases[pi];
+    el.textContent = del ? phrase.slice(0, ci-1) : phrase.slice(0, ci+1);
+    del ? ci-- : ci++;
+    let speed = del ? 42 : 80;
+    if (!del && ci > phrase.length) { speed = 1900; del = true; }
+    else if (del && ci < 1) { del = false; pi = (pi+1) % phrases.length; speed = 320; }
+    setTimeout(tick, speed);
   }
- 
+
   function init() {
     if (!el) return;
-    setTimeout(tick, 600);
+    setTimeout(tick, 700);
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   6. SCROLL REVEAL
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   6. SCROLL REVEAL (fade-up + blur removal)
+   ================================================================ */
 const ScrollReveal = (() => {
-  const items = $$('.reveal');
- 
-  const observer = new IntersectionObserver((entries) => {
+  const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
- 
       const el = entry.target;
       el.classList.add('visible');
- 
-      // Trigger skill bars inside revealed card
-      $$('.bar-fill', el).forEach(bar => {
-        setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 150);
-      });
- 
-      observer.unobserve(el);
+      // animate skill bars inside
+      $$('.bar-fill', el).forEach(b => setTimeout(() => { b.style.width = b.dataset.width + '%'; }, 160));
+      // animate exp-stat counters inside
+      $$('.exp-stat-num', el).forEach(n => animCount(n));
+      io.unobserve(el);
     });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
- 
+  }, { threshold: 0.1, rootMargin: '0px 0px -48px 0px' });
+
   function init() {
-    // Stagger children with delay
-    items.forEach((el, i) => {
-      const sib = el.parentElement
-        ? [...el.parentElement.children].filter(c => c.classList.contains('reveal'))
-        : [];
-      const pos = sib.indexOf(el);
+    $$('.reveal').forEach((el, i) => {
+      const sibs = el.parentElement ? [...el.parentElement.children].filter(c => c.classList.contains('reveal')) : [];
+      const pos  = sibs.indexOf(el);
       if (pos > 0) el.style.transitionDelay = `${pos * 0.08}s`;
- 
-      observer.observe(el);
+      io.observe(el);
     });
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   7. ANIMATED COUNTERS (Hero stats)
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   7. HERO STATS COUNTER
+   ================================================================ */
 const HeroStats = (() => {
-  const stats = $$('.stat-num');
-  let   fired = false;
- 
-  function animateCounter(el) {
-    const target = parseInt(el.dataset.target, 10);
-    const dur    = 1800;
-    const steps  = target;
-    const step   = dur / steps;
-    let   cur    = 0;
- 
-    el.textContent = '0';
- 
-    const timer = setInterval(() => {
-      cur++;
-      el.textContent = cur;
-      if (cur >= target) clearInterval(timer);
-    }, step);
-  }
- 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting || fired) return;
+  let fired = false;
+  const io  = new IntersectionObserver(entries => {
+    if (fired) return;
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
       fired = true;
-      stats.forEach(animateCounter);
-      observer.disconnect();
+      $$('.stat-num').forEach(animCount);
+      io.disconnect();
     });
   }, { threshold: 0.5 });
- 
+
   function init() {
-    const block = $('.hero-stats');
-    if (block) observer.observe(block);
+    const b = $('.hero-stats');
+    if (b) io.observe(b);
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   8. SKILL BARS (observer-driven)
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   8. EXP-STATS SECTION COUNTER
+   ================================================================ */
+const ExpStats = (() => {
+  const fired = new Set();
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting || fired.has(e.target)) return;
+      fired.add(e.target);
+      $$('.exp-stat-num', e.target).forEach(animCount);
+    });
+  }, { threshold: 0.3 });
+
+  function init() {
+    $$('.exp-stat-card').forEach(c => io.observe(c));
+  }
+
+  return { init };
+})();
+
+/* ================================================================
+   9. GENERIC COUNTER ANIMATION
+   ================================================================ */
+function animCount(el) {
+  if (el.dataset.counted) return;
+  el.dataset.counted = '1';
+  const target = parseInt(el.dataset.target, 10);
+  const dur    = 1600;
+  const step   = dur / target;
+  let cur      = 0;
+  const t = setInterval(() => {
+    cur++;
+    el.textContent = cur;
+    if (cur >= target) clearInterval(t);
+  }, step);
+}
+
+/* ================================================================
+   10. SKILL BARS (observer-driven, fires on section reveal)
+   ================================================================ */
 const SkillBars = (() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      $$('.bar-fill', entry.target).forEach(bar => {
-        setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
-      });
-      observer.unobserve(entry.target);
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      $$('.bar-fill', e.target).forEach(b => setTimeout(() => { b.style.width = b.dataset.width + '%'; }, 200));
+      io.unobserve(e.target);
     });
   }, { threshold: 0.25 });
- 
+
   function init() {
-    $$('.skill-category').forEach(cat => observer.observe(cat));
+    $$('.skill-category').forEach(c => io.observe(c));
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   9. PROJECT CARDS – 3D TILT ON HOVER
-   ---------------------------------------------------------------- */
-const ProjectTilt = (() => {
-  const MAX_TILT = 6;
- 
-  function applyTilt(card, e) {
-    const rect  = card.getBoundingClientRect();
-    const cx    = rect.left + rect.width  / 2;
-    const cy    = rect.top  + rect.height / 2;
-    const dx    = (e.clientX - cx) / (rect.width  / 2);
-    const dy    = (e.clientY - cy) / (rect.height / 2);
-    const rx    = clamp(-dy * MAX_TILT, -MAX_TILT, MAX_TILT);
-    const ry    = clamp( dx * MAX_TILT, -MAX_TILT, MAX_TILT);
- 
-    card.style.transform = `translateY(-10px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-  }
- 
-  function resetTilt(card) {
-    card.style.transform = '';
-  }
- 
+
+/* ================================================================
+   11. 3D PROJECT CARD TILT
+   ================================================================ */
+const CardTilt = (() => {
+  const MAX = 7;
+
   function init() {
-    // Only on non-touch devices
-    if (window.matchMedia('(hover: none)').matches) return;
- 
+    if (isMobile()) return;
     $$('.project-card').forEach(card => {
-      card.style.transition = 'transform 0.15s ease, box-shadow 0.35s ease, border-color 0.35s ease';
-      card.addEventListener('mousemove',  e  => applyTilt(card, e), { passive: true });
-      card.addEventListener('mouseleave', () => resetTilt(card));
+      card.addEventListener('mousemove', e => {
+        const r  = card.getBoundingClientRect();
+        const dx = (e.clientX - r.left  - r.width  / 2) / (r.width  / 2);
+        const dy = (e.clientY - r.top   - r.height / 2) / (r.height / 2);
+        card.style.transform = `translateY(-10px) rotateX(${clamp(-dy*MAX,-MAX,MAX)}deg) rotateY(${clamp(dx*MAX,-MAX,MAX)}deg)`;
+      }, { passive: true });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.transition = 'transform .6s cubic-bezier(.23,1,.32,1), box-shadow .35s, border-color .35s';
+        setTimeout(() => card.style.transition = '', 600);
+      });
     });
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   10. BACK TO TOP
-   ---------------------------------------------------------------- */
-const BackToTop = (() => {
-  const btn = $('#backToTop');
- 
-  function update() {
-    if (!btn) return;
-    btn.classList.toggle('visible', window.scrollY > 420);
-  }
- 
+
+/* ================================================================
+   12. SPOTLIGHT HOVER ON CARDS
+   ================================================================ */
+const Spotlight = (() => {
   function init() {
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isMobile()) return;
+    $$('.spotlight-card').forEach(card => {
+      const sp = $('.spotlight', card);
+      if (!sp) return;
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        sp.style.left = (e.clientX - r.left) + 'px';
+        sp.style.top  = (e.clientY - r.top)  + 'px';
+      }, { passive: true });
     });
   }
- 
-  return { init, update };
+
+  return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   11. FLOATING ICONS – PARALLAX ON SCROLL
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   13. MAGNETIC BUTTONS
+   ================================================================ */
+const MagneticBtns = (() => {
+  const STRENGTH = 0.28;
+
+  function init() {
+    if (isMobile()) return;
+    $$('.mag-wrap').forEach(wrap => {
+      const btn = $('.mag-btn', wrap);
+      if (!btn) return;
+
+      wrap.addEventListener('mousemove', e => {
+        const r  = wrap.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width  / 2) * STRENGTH;
+        const dy = (e.clientY - r.top  - r.height / 2) * STRENGTH;
+        btn.style.transform = `translate(${dx}px,${dy}px)`;
+      }, { passive: true });
+
+      wrap.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+        btn.style.transition = 'transform .5s cubic-bezier(.23,1,.32,1)';
+        setTimeout(() => btn.style.transition = '', 500);
+      });
+    });
+  }
+
+  return { init };
+})();
+
+/* ================================================================
+   14. FLOATING ICON PARALLAX ON SCROLL
+   ================================================================ */
 const FloatParallax = (() => {
   const icons = $$('.float-icon');
-  let   ticking = false;
- 
+  let ticking = false;
+
   function update() {
     const y = window.scrollY;
-    icons.forEach((icon, i) => {
-      const dir    = i % 2 === 0 ? 1 : -1;
-      const offset = dir * y * 0.05;
-      icon.style.transform = `translateY(${offset}px)`;
+    icons.forEach((ic, i) => {
+      const dir = i % 2 === 0 ? 1 : -1;
+      ic.style.transform = `translateY(${dir * y * 0.045}px)`;
     });
     ticking = false;
   }
- 
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }
- 
+
   function init() {
-    if (!icons.length) return;
-    window.addEventListener('scroll', onScroll, { passive: true });
+    if (!icons.length || isMobile()) return;
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
   }
- 
+
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   12. SECTION GRID OVERLAY (decorative – adds on alternate sections)
-   ---------------------------------------------------------------- */
+
+/* ================================================================
+   15. BACK TO TOP – morph animation
+   ================================================================ */
+const BackToTop = (() => {
+  const btn = $('#backToTop');
+
+  function update() {
+    if (!btn) return;
+    const show = window.scrollY > 420;
+    btn.classList.toggle('visible', show);
+  }
+
+  function init() {
+    btn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+
+  return { init, update };
+})();
+
+/* ================================================================
+   16. ACHIEVEMENT CARDS – floating handled by CSS,
+       but we re-bind after page load in case DOM was injected late
+   ================================================================ */
+const AchCards = (() => {
+  function init() {
+    // CSS handles the float animation via nth-child selectors.
+    // JS disables it on touch to avoid jank.
+    if (isMobile()) {
+      $$('.ach-card').forEach(c => c.style.animation = 'none');
+    }
+  }
+  return { init };
+})();
+
+/* ================================================================
+   17. MARQUEE – pause on user interaction / reduced motion
+   ================================================================ */
+const Marquee = (() => {
+  function init() {
+    const track = $('#marqueeTrack');
+    if (!track) return;
+
+    // Respect reduced-motion preference
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      track.style.animation = 'none';
+    }
+  }
+
+  return { init };
+})();
+
+/* ================================================================
+   18. GRID OVERLAY on alt sections
+   ================================================================ */
 const GridOverlay = (() => {
   function init() {
-    $$('.section-alt').forEach(sec => {
-      if (!$('.section-grid-overlay', sec)) {
-        const div = document.createElement('div');
-        div.className = 'section-grid-overlay';
-        sec.insertBefore(div, sec.firstChild);
+    $$('.section-alt, .exp-stats-section').forEach(s => {
+      if (!$('.section-grid-overlay', s)) {
+        const d = document.createElement('div');
+        d.className = 'section-grid-overlay';
+        s.insertBefore(d, s.firstChild);
       }
     });
   }
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   13. ACTIVE SECTION HIGHLIGHT (section-based bg tint on navbar)
-   ---------------------------------------------------------------- */
-const SectionWatcher = (() => {
-  const sections = $$('section[id]');
-  let   current  = '';
- 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) current = entry.target.id;
-    });
-  }, { rootMargin: '-40% 0px -40% 0px' });
- 
+
+/* ================================================================
+   19. RESIZE – debounced
+   ================================================================ */
+const Resize = (() => {
+  let t;
   function init() {
-    sections.forEach(s => observer.observe(s));
-  }
- 
-  return { init };
-})();
- 
-/* ----------------------------------------------------------------
-   14. KEYBOARD NAVIGATION HELPER
-   ---------------------------------------------------------------- */
-const KeyboardNav = (() => {
-  function init() {
-    // Make glass cards focusable for keyboard users if they have links
-    $$('.project-card, .cert-card, .about-card').forEach(card => {
-      if (!$('a, button', card)) {
-        card.setAttribute('tabindex', '0');
-      }
-    });
+    window.addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(() => Cursor.bindTargets?.(), 300);
+    }, { passive: true });
   }
   return { init };
 })();
- 
-/* ----------------------------------------------------------------
-   15. RESIZE HANDLER (debounced)
-   ---------------------------------------------------------------- */
-const ResizeHandler = (() => {
-  let timer;
- 
-  function onResize() {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      // Re-bind cursor hover targets after DOM changes
-      Cursor.bindHoverTargets && Cursor.bindHoverTargets();
-    }, 250);
-  }
- 
-  function init() {
-    window.addEventListener('resize', onResize, { passive: true });
-  }
- 
-  return { init };
-})();
- 
-/* ----------------------------------------------------------------
-   16. PERFORMANCE – PAUSE PARTICLES WHEN TAB HIDDEN
-   ---------------------------------------------------------------- */
-const VisibilityManager = (() => {
-  function init() {
-    document.addEventListener('visibilitychange', () => {
-      // particles RAF automatically pauses when hidden in most browsers,
-      // but we can explicitly manage here if needed.
-    });
-  }
-  return { init };
-})();
- 
-/* ----------------------------------------------------------------
-   17. SMOOTH ENTRANCE for hero elements (CSS driven, JS triggers)
-   ---------------------------------------------------------------- */
-const HeroEntrance = (() => {
-  function init() {
-    // Hero elements are animated via CSS keyframes with animation-fill-mode: both
-    // so they work without JS — this just ensures body doesn't flash
-    document.body.classList.add('js-loaded');
-  }
-  return { init };
-})();
- 
-/* ----------------------------------------------------------------
-   18. GITHUB PAGES PATH FIX (for subdirectory deployments)
-   ---------------------------------------------------------------- */
-const GitHubPagesFix = (() => {
-  function init() {
-    // Ensure anchor links work on GitHub Pages
-    const base = document.querySelector('base');
-    if (base) {
-      $$('a[href^="#"]').forEach(a => {
-        const href = a.getAttribute('href');
-        if (href.startsWith('#')) {
-          a.setAttribute('href', href); // keep as-is
-        }
-      });
-    }
-  }
-  return { init };
-})();
- 
-/* ----------------------------------------------------------------
-   BOOTSTRAP – INIT ORDER MATTERS
-   ---------------------------------------------------------------- */
-onReady(() => {
-  HeroEntrance.init();
-  GitHubPagesFix.init();
+
+/* ================================================================
+   BOOT
+   ================================================================ */
+function boot() {
+  Cursor.init();
   Navbar.init();
   BackToTop.init();
-  Cursor.init();
   SkillBars.init();
-  ProjectTilt.init();
+  CardTilt.init();
+  Spotlight.init();
+  MagneticBtns.init();
   FloatParallax.init();
+  AchCards.init();
+  Marquee.init();
   GridOverlay.init();
-  SectionWatcher.init();
-  KeyboardNav.init();
-  ResizeHandler.init();
-  VisibilityManager.init();
- 
-  // Loader drives Particles + ScrollReveal + HeroStats + TypeWriter
+  Resize.init();
+
+  // Loader kicks off: Particles · ScrollReveal · HeroStats · ExpStats · TypeWriter
   Loader.init();
-});
- 
-/* ----------------------------------------------------------------
-   END OF SCRIPT
-   ---------------------------------------------------------------- */
+}
+
+if (document.readyState !== 'loading') boot();
+else document.addEventListener('DOMContentLoaded', boot);

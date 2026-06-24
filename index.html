@@ -268,7 +268,241 @@
   .motto-wrap blockquote::before { left: 0; top: -10px; }
   .motto-wrap blockquote::after  { right: 0; bottom: -30px; }
 
-  /* ── Mobile tweaks ── */
+  /* ══════════════════════════════════════
+     PREMIUM ANIMATION ADDITIONS
+  ══════════════════════════════════════ */
+
+  /* ── Aurora background blobs ── */
+  .aurora {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; overflow: hidden;
+  }
+  .aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .13;
+    will-change: transform;
+    animation: auroraFloat linear infinite;
+  }
+  .aurora-blob:nth-child(1){
+    width:600px;height:600px;
+    background:radial-gradient(circle,#6c63ff,transparent 70%);
+    top:-15%;left:-10%;
+    animation-duration:28s;
+  }
+  .aurora-blob:nth-child(2){
+    width:500px;height:500px;
+    background:radial-gradient(circle,#00d4ff,transparent 70%);
+    top:40%;right:-10%;
+    animation-duration:22s;
+    animation-direction:reverse;
+  }
+  .aurora-blob:nth-child(3){
+    width:400px;height:400px;
+    background:radial-gradient(circle,#a855f7,transparent 70%);
+    bottom:-10%;left:35%;
+    animation-duration:32s;
+  }
+  @keyframes auroraFloat{
+    0%  {transform:translate(0,0)   scale(1);}
+    33% {transform:translate(40px,-30px) scale(1.07);}
+    66% {transform:translate(-30px,20px) scale(.95);}
+    100%{transform:translate(0,0)   scale(1);}
+  }
+
+  /* ── Animated hero gradient text ── */
+  .hero-name .gradient-text {
+    background: linear-gradient(90deg,#6c63ff,#00d4ff,#a855f7,#6c63ff);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 6s ease infinite;
+  }
+  @keyframes gradientShift{
+    0%  {background-position:0%   50%;}
+    50% {background-position:100% 50%;}
+    100%{background-position:0%   50%;}
+  }
+
+  /* ── Magnetic button wrapper ── */
+  .mag-wrap { display:inline-block; }
+
+  /* ── Tech marquee ribbon ── */
+  .marquee-section {
+    padding: 28px 0;
+    overflow: hidden;
+    background: rgba(11,13,24,.6);
+    border-top: 1px solid rgba(108,99,255,.1);
+    border-bottom: 1px solid rgba(108,99,255,.1);
+    position: relative; z-index: 1;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marqueeScroll 28s linear infinite;
+    gap: 0;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  @keyframes marqueeScroll{
+    from{transform:translateX(0);}
+    to  {transform:translateX(-50%);}
+  }
+  .marquee-item {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 0 32px;
+    font-size: .85rem; font-weight: 600;
+    color: var(--txt-secondary);
+    white-space: nowrap;
+    border-right: 1px solid rgba(108,99,255,.12);
+    transition: color .3s;
+    cursor: default;
+  }
+  .marquee-item:hover { color: var(--txt-primary); }
+  .marquee-item i { font-size: 1.05rem; }
+  .mi-py  { color: #3776ab; }
+  .mi-sql { color: #00d4ff; }
+  .mi-pd  { color: #e48020; }
+  .mi-np  { color: #4dabcf; }
+  .mi-plt { color: #11557c; }
+  .mi-ml  { color: #a855f7; }
+  .mi-ai  { color: #6c63ff; }
+  .mi-exc { color: #22c55e; }
+  .mi-git { color: #f05032; }
+  .mi-gc  { color: #4285f4; }
+
+  /* ── Spotlight hover on cards ── */
+  .spotlight-card {
+    position: relative; overflow: hidden;
+  }
+  .spotlight-card .spotlight {
+    position: absolute;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(108,99,255,.12) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+    transition: opacity .3s;
+    will-change: transform, opacity;
+  }
+  .spotlight-card:hover .spotlight { opacity: 1; }
+
+  /* ── 3D project card perspective ── */
+  .projects-grid { perspective: 1400px; }
+  .project-card  { transform-style: preserve-3d; }
+
+  /* ── Navbar hide-on-scroll-down ── */
+  #navbar.nav-hidden {
+    transform: translateY(-100%);
+    transition: transform .4s cubic-bezier(.4,0,.2,1);
+  }
+  #navbar { transition: transform .4s cubic-bezier(.4,0,.2,1), background .35s, box-shadow .35s, border-color .35s; }
+
+  /* ── Resume CTA section ── */
+  .resume-cta-section {
+    position: relative; z-index: 1;
+    padding: 72px 0;
+    background: var(--clr-bg-2);
+  }
+  .resume-cta-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+    padding: 40px 48px;
+  }
+  .rcta-text h2 {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .rcta-text p { font-size: .95rem; color: var(--txt-secondary); max-width: 480px; }
+  .rcta-actions { display: flex; gap: 14px; flex-wrap: wrap; flex-shrink: 0; }
+
+  /* ── Availability status section ── */
+  .availability-bar {
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px;
+    padding: 14px 28px;
+    background: rgba(37,211,102,.06);
+    border: 1px solid rgba(37,211,102,.2);
+    border-radius: 99px;
+    margin: 0 auto 56px;
+    width: fit-content;
+    font-size: .85rem; font-weight: 500;
+    color: #22c55e;
+    font-family: var(--font-mono);
+    animation: availPulse 3s ease infinite;
+  }
+  .availability-bar .avail-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+    animation: badgeBlink 1.6s ease infinite;
+    flex-shrink: 0;
+  }
+  @keyframes availPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(37,211,102,.15);}
+    50%    {box-shadow:0 0 0 12px rgba(37,211,102,0);}
+  }
+
+  /* ── Experience statistics strip ── */
+  .exp-stats-section {
+    position: relative; z-index: 1;
+    padding: 56px 0;
+    background: var(--clr-bg);
+  }
+  .exp-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+  }
+  .exp-stat-card {
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform .35s, box-shadow .35s;
+  }
+  .exp-stat-card:hover { transform: translateY(-5px); box-shadow: 0 16px 44px rgba(108,99,255,.18); }
+  .exp-stat-num {
+    font-family: var(--font-mono);
+    font-size: 2.4rem; font-weight: 700;
+    background: var(--grad-main);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; display: block; margin-bottom: 6px;
+  }
+  .exp-stat-label { font-size: .78rem; color: var(--txt-secondary); text-transform: uppercase; letter-spacing: .1em; }
+  .exp-stat-icon  { font-size: 1.4rem; margin-bottom: 12px; color: var(--clr-a1); }
+
+  /* ── Achievement floating animation ── */
+  .ach-card:nth-child(1){ animation: achFloat 4.0s ease-in-out infinite; }
+  .ach-card:nth-child(2){ animation: achFloat 4.6s ease-in-out infinite .4s; }
+  .ach-card:nth-child(3){ animation: achFloat 3.8s ease-in-out infinite .8s; }
+  @keyframes achFloat{
+    0%,100%{transform:translateY(0);}
+    50%    {transform:translateY(-5px);}
+  }
+  /* override hover to keep translateY from fighting */
+  .ach-card:hover{ animation: none; transform: translateY(-5px); }
+
+  /* ── Timeline dot extra ring ── */
+  .timeline-dot.edu::before   { border-color: var(--clr-a1); }
+  .timeline-dot.intern::before{ border-color: var(--clr-a2); }
+
+  /* ── Back-to-top morph ── */
+  #backToTop { transition: opacity .4s, visibility .4s, transform .45s cubic-bezier(.34,1.56,.64,1), box-shadow .35s; }
+  #backToTop.visible { transform: translateY(0) scale(1); }
+
+  /* ── Contact link slide ── */
+  .contact-link {
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1),
+                box-shadow .35s, border-color .35s;
+  }
+  .contact-link:hover { transform: translateX(10px); }
+
+  /* ── Section fade-blur reveal ── */
+  .reveal { filter: blur(4px); }
+  .reveal.visible { filter: blur(0); }
+
+  /* ── Mobile: disable heavy effects ── */
   @media (max-width: 768px) {
     .hero-actions { gap: 10px; }
     .hero-actions .btn { font-size: .82rem; padding: 10px 18px; }
@@ -276,14 +510,31 @@
     .contact-info-card { padding: 22px 18px; }
     .ach-grid { grid-template-columns: 1fr; }
     .learning-grid { grid-template-columns: 1fr 1fr; }
+    .project-card { transform: none !important; }
+    .spotlight    { display: none !important; }
+    .aurora-blob  { display: none; }
+    .ach-card     { animation: none; }
+    .reveal       { filter: none; }
+    .resume-cta-inner { padding: 28px 20px; flex-direction: column; }
+    .rcta-actions { width: 100%; }
+    .rcta-actions .btn { flex: 1; justify-content: center; }
   }
   @media (max-width: 480px) {
     .learning-grid { grid-template-columns: 1fr; }
     .hero-actions .btn { width: 100%; justify-content: center; }
+    .exp-stats-grid { grid-template-columns: repeat(2,1fr); }
+    .marquee-item   { padding: 0 20px; }
   }
   </style>
 </head>
 <body>
+
+<!-- Aurora background blobs -->
+<div class="aurora" aria-hidden="true">
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+  <div class="aurora-blob"></div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      LOADING SCREEN
@@ -370,12 +621,16 @@
 
     <!-- Primary CTAs -->
     <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">
-        <i class="fas fa-rocket"></i> View Projects
-      </a>
-      <a href="resume.pdf" download class="btn btn-outline">
-        <i class="fas fa-file-arrow-down"></i> Download Resume
-      </a>
+      <span class="mag-wrap">
+        <a href="#projects" class="btn btn-primary mag-btn">
+          <i class="fas fa-rocket"></i> View Projects
+        </a>
+      </span>
+      <span class="mag-wrap">
+        <a href="resume.pdf" download class="btn btn-outline mag-btn">
+          <i class="fas fa-file-arrow-down"></i> Download Resume
+        </a>
+      </span>
     </div>
 
     <!-- Secondary action buttons -->
@@ -419,6 +674,46 @@
     <div class="scroll-line"></div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════
+     TECH STACK MARQUEE RIBBON
+════════════════════════════════════════════ -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track" id="marqueeTrack">
+    <!-- set 1 -->
+    <span class="marquee-item"><i class="fab fa-python mi-py"></i>Python</span>
+    <span class="marquee-item"><i class="fas fa-database mi-sql"></i>SQL</span>
+    <span class="marquee-item"><i class="fas fa-table mi-exc"></i>Excel</span>
+    <span class="marquee-item"><i class="fas fa-calculator mi-pd"></i>Pandas</span>
+    <span class="marquee-item"><i class="fas fa-square-root-alt mi-np"></i>NumPy</span>
+    <span class="marquee-item"><i class="fas fa-chart-line mi-plt"></i>Matplotlib</span>
+    <span class="marquee-item"><i class="fas fa-robot mi-ml"></i>Machine Learning</span>
+    <span class="marquee-item"><i class="fas fa-brain mi-ai"></i>Artificial Intelligence</span>
+    <span class="marquee-item"><i class="fas fa-microscope mi-ai"></i>Data Analytics</span>
+    <span class="marquee-item"><i class="fab fa-google mi-gc"></i>Google Cloud</span>
+    <span class="marquee-item"><i class="fab fa-git-alt mi-git"></i>Git</span>
+    <span class="marquee-item"><i class="fas fa-book-open mi-np"></i>Jupyter Notebook</span>
+    <span class="marquee-item"><i class="fas fa-flask mi-sql"></i>Google Colab</span>
+    <span class="marquee-item"><i class="fas fa-magic mi-ml"></i>Generative AI</span>
+    <span class="marquee-item"><i class="fas fa-comments mi-ai"></i>NLP</span>
+    <!-- set 2 (duplicate for seamless loop) -->
+    <span class="marquee-item"><i class="fab fa-python mi-py"></i>Python</span>
+    <span class="marquee-item"><i class="fas fa-database mi-sql"></i>SQL</span>
+    <span class="marquee-item"><i class="fas fa-table mi-exc"></i>Excel</span>
+    <span class="marquee-item"><i class="fas fa-calculator mi-pd"></i>Pandas</span>
+    <span class="marquee-item"><i class="fas fa-square-root-alt mi-np"></i>NumPy</span>
+    <span class="marquee-item"><i class="fas fa-chart-line mi-plt"></i>Matplotlib</span>
+    <span class="marquee-item"><i class="fas fa-robot mi-ml"></i>Machine Learning</span>
+    <span class="marquee-item"><i class="fas fa-brain mi-ai"></i>Artificial Intelligence</span>
+    <span class="marquee-item"><i class="fas fa-microscope mi-ai"></i>Data Analytics</span>
+    <span class="marquee-item"><i class="fab fa-google mi-gc"></i>Google Cloud</span>
+    <span class="marquee-item"><i class="fab fa-git-alt mi-git"></i>Git</span>
+    <span class="marquee-item"><i class="fas fa-book-open mi-np"></i>Jupyter Notebook</span>
+    <span class="marquee-item"><i class="fas fa-flask mi-sql"></i>Google Colab</span>
+    <span class="marquee-item"><i class="fas fa-magic mi-ml"></i>Generative AI</span>
+    <span class="marquee-item"><i class="fas fa-comments mi-ai"></i>NLP</span>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      ABOUT
@@ -613,6 +908,50 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
+     EXPERIENCE STATISTICS
+════════════════════════════════════════════ -->
+<section class="exp-stats-section">
+  <div class="container">
+    <div class="section-header reveal" style="margin-bottom:40px;">
+      <span class="section-eyebrow">By the Numbers</span>
+      <h2 class="section-title">Experience <span class="gradient-text">Snapshot</span></h2>
+    </div>
+    <div class="exp-stats-grid">
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-code"></i></div>
+        <span class="exp-stat-num" data-target="4">0</span>
+        <span class="exp-stat-label">Projects Built</span>
+      </div>
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-certificate"></i></div>
+        <span class="exp-stat-num" data-target="6">0</span>
+        <span class="exp-stat-label">Certifications</span>
+      </div>
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-briefcase"></i></div>
+        <span class="exp-stat-num" data-target="2">0</span>
+        <span class="exp-stat-label">Internships</span>
+      </div>
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-tools"></i></div>
+        <span class="exp-stat-num" data-target="15">0</span>
+        <span class="exp-stat-label">Tools &amp; Tech</span>
+      </div>
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span class="exp-stat-num" data-target="78">0</span>
+        <span class="exp-stat-label">CGPA (×10)</span>
+      </div>
+      <div class="exp-stat-card glass reveal">
+        <div class="exp-stat-icon"><i class="fas fa-calendar-check"></i></div>
+        <span class="exp-stat-num" data-target="2">0</span>
+        <span class="exp-stat-label">Years Learning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
      PROJECTS
 ════════════════════════════════════════════ -->
 <section id="projects" class="section">
@@ -626,7 +965,8 @@
     <div class="projects-grid">
 
       <!-- 1 · Fake News Detection -->
-      <div class="project-card glass reveal">
+      <div class="project-card glass reveal spotlight-card">
+        <div class="spotlight"></div>
         <div class="project-header">
           <div class="project-icon"><i class="fas fa-newspaper"></i></div>
           <div class="project-links">
@@ -656,7 +996,8 @@
       </div>
 
       <!-- 2 · Student Performance -->
-      <div class="project-card glass reveal">
+      <div class="project-card glass reveal spotlight-card">
+        <div class="spotlight"></div>
         <div class="project-header">
           <div class="project-icon"><i class="fas fa-graduation-cap"></i></div>
           <div class="project-links">
@@ -687,7 +1028,8 @@
       </div>
 
       <!-- 3 · Sales Dashboard -->
-      <div class="project-card glass reveal">
+      <div class="project-card glass reveal spotlight-card">
+        <div class="spotlight"></div>
         <div class="project-header">
           <div class="project-icon"><i class="fas fa-chart-column"></i></div>
           <div class="project-links">
@@ -716,7 +1058,8 @@
       </div>
 
       <!-- 4 · E-Commerce Cart -->
-      <div class="project-card glass reveal featured-card">
+      <div class="project-card glass reveal featured-card spotlight-card">
+        <div class="spotlight"></div>
         <div class="project-badge">Full-Stack</div>
         <div class="project-header">
           <div class="project-icon"><i class="fas fa-shopping-cart"></i></div>
@@ -1139,6 +1482,44 @@
       <blockquote>
         Turning Data into Decisions Through Analytics, Innovation and Continuous Learning.
       </blockquote>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     AVAILABILITY STATUS + RESUME CTA
+════════════════════════════════════════════ -->
+<section class="resume-cta-section">
+  <div class="container">
+
+    <!-- Availability status pill -->
+    <div class="availability-bar reveal" role="status">
+      <span class="avail-dot"></span>
+      <span>Open to Internships &amp; Entry-Level Data Analyst Roles — 2026</span>
+    </div>
+
+    <!-- Resume CTA card -->
+    <div class="resume-cta-inner glass reveal">
+      <div class="rcta-text">
+        <h2>Interested in working <span class="gradient-text">together?</span></h2>
+        <p>
+          I'm actively seeking internships and entry-level roles in Data Analytics,
+          Data Science and AI. Download my resume or reach out — let's create
+          something impactful with data.
+        </p>
+      </div>
+      <div class="rcta-actions">
+        <a href="resume.pdf" download class="btn btn-primary">
+          <i class="fas fa-file-arrow-down"></i> Download Resume
+        </a>
+        <a href="mailto:elavarasantech08@gmail.com" class="btn btn-outline">
+          <i class="fas fa-paper-plane"></i> Hire Me
+        </a>
+        <a href="https://wa.me/918667883575" target="_blank" rel="noopener" class="btn btn-whatsapp">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+      </div>
     </div>
 
   </div>
