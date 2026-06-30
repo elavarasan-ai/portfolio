@@ -533,6 +533,61 @@ const GridOverlay = (() => {
 })();
 
 /* ================================================================
+   21. DATA-SCIENTIST FX – falling data stream + mini terminal typing
+   ================================================================ */
+const DataSciFx = (() => {
+  const SYMBOLS = ['0','1','df','pd','np','%','Σ','μ','σ','ML','AI','SQL','x²','R²'];
+
+  function initDataStream() {
+    const box = $('#dataStream');
+    if (!box) return;
+    const count = window.innerWidth < 600 ? 8 : 14;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('span');
+      s.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+      s.style.left = Math.random() * 100 + '%';
+      const dur = 4 + Math.random() * 5;
+      s.style.animationDuration = dur + 's';
+      s.style.animationDelay = (Math.random() * dur) + 's';
+      box.appendChild(s);
+    }
+  }
+
+  const SNIPPETS = [
+    'pd.read_csv("data.csv")',
+    'df.describe()',
+    'model.fit(X_train, y_train)',
+    'sns.heatmap(corr, annot=True)',
+    'df.groupby("region").mean()',
+    'accuracy_score(y_test, preds)'
+  ];
+
+  function initTerminal() {
+    const el = $('#mtCode');
+    if (!el) return;
+    let si = 0, ci = 0, del = false;
+
+    function tick() {
+      const text = SNIPPETS[si];
+      el.textContent = del ? text.slice(0, ci - 1) : text.slice(0, ci + 1);
+      del ? ci-- : ci++;
+      let speed = del ? 28 : 55;
+      if (!del && ci > text.length) { speed = 1500; del = true; }
+      else if (del && ci < 1) { del = false; si = (si + 1) % SNIPPETS.length; speed = 280; }
+      setTimeout(tick, speed);
+    }
+    setTimeout(tick, 1200);
+  }
+
+  function init() {
+    initDataStream();
+    initTerminal();
+  }
+
+  return { init };
+})();
+
+/* ================================================================
    19. RESIZE – debounced
    ================================================================ */
 const Resize = (() => {
@@ -543,6 +598,48 @@ const Resize = (() => {
       t = setTimeout(() => Cursor.bindTargets?.(), 300);
     }, { passive: true });
   }
+  return { init };
+})();
+
+/* ================================================================
+   20. TIMELINE FX – alternating L/R reveal + scroll-driven progress line
+   ================================================================ */
+const TimelineFx = (() => {
+  function setupDirections() {
+    $$('.timeline-item').forEach((item, i) => {
+      item.classList.add(i % 2 === 0 ? 'from-left' : 'from-right');
+    });
+  }
+
+  function setupProgress() {
+    const track = $('.timeline');
+    const bar   = $('.timeline-progress');
+    if (!track || !bar) return;
+    let raf = null;
+    function update() {
+      const rect = track.getBoundingClientRect();
+      const vh   = window.innerHeight;
+      const start = rect.top;
+      const total  = rect.height;
+      let progress = (vh * 0.85 - start) / total;
+      progress = Math.max(0, Math.min(1, progress));
+      bar.style.height = (progress * 100) + '%';
+      raf = null;
+    }
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+
+  function init() {
+    setupDirections();
+    setupProgress();
+  }
+
   return { init };
 })();
 
@@ -562,6 +659,8 @@ function boot() {
   Marquee.init();
   GridOverlay.init();
   Resize.init();
+  TimelineFx.init();
+  DataSciFx.init();
 
   // Loader kicks off: Particles · ScrollReveal · HeroStats · ExpStats · TypeWriter
   Loader.init();

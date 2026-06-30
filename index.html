@@ -525,6 +525,174 @@
     .exp-stats-grid { grid-template-columns: repeat(2,1fr); }
     .marquee-item   { padding: 0 20px; }
   }
+  /* ============================================================
+     NEW: FLOATING GLOW BADGES + SCROLL-REVEAL TIMELINE PROGRESS
+     ============================================================ */
+
+  /* ── Glow-pulse hover for cards (ach, learn, project, cert, exp-stat, skill) ── */
+  .ach-card, .learn-card, .exp-stat-card,
+  .project-card, .cert-card, .skill-category {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .ach-card::before, .learn-card::before, .exp-stat-card::before,
+  .project-card::before, .cert-card::before, .skill-category::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border-radius: inherit;
+    background: conic-gradient(from 0deg, var(--clr-a1), var(--clr-a2), var(--clr-a3), var(--clr-a1));
+    opacity: 0;
+    filter: blur(14px);
+    transition: opacity .45s ease;
+    animation: glowSpin 5s linear infinite;
+    animation-play-state: paused;
+  }
+  .ach-card:hover::before, .learn-card:hover::before, .exp-stat-card:hover::before,
+  .project-card:hover::before, .cert-card:hover::before, .skill-category:hover::before {
+    opacity: .45;
+    animation-play-state: running;
+  }
+  @keyframes glowSpin { to { transform: rotate(360deg); } }
+
+  /* ── Floating badges (pills / chips / tech tags get a gentle bob) ── */
+  .strength-pill, .activity-chip, .tech-pill, .info-chip,
+  .timeline-skills span, .float-icon {
+    animation: badgeFloat 3.6s ease-in-out infinite;
+  }
+  @keyframes badgeFloat {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .strength-pill:nth-child(2n), .activity-chip:nth-child(2n),
+  .tech-pill:nth-child(2n), .info-chip:nth-child(2n),
+  .timeline-skills span:nth-child(2n) { animation-delay: .5s; animation-duration: 4.1s; }
+  .strength-pill:nth-child(3n), .activity-chip:nth-child(3n),
+  .tech-pill:nth-child(3n), .info-chip:nth-child(3n),
+  .timeline-skills span:nth-child(3n) { animation-delay: 1s; animation-duration: 3.2s; }
+  .strength-pill:hover, .activity-chip:hover, .tech-pill:hover,
+  .info-chip:hover, .timeline-skills span:hover {
+    animation-play-state: paused;
+    box-shadow: 0 0 0 1px rgba(108,99,255,.4), 0 10px 28px rgba(108,99,255,.28);
+  }
+
+  /* ── Timeline scroll-reveal progress line ── */
+  .timeline { overflow: visible; }
+  .timeline-progress {
+    position: absolute;
+    left: 14px;
+    top: 0;
+    width: 2px;
+    height: 0%;
+    background: linear-gradient(to bottom, var(--clr-a1), var(--clr-a2), var(--clr-a3));
+    box-shadow: 0 0 12px rgba(0,212,255,.65);
+    z-index: 1;
+    transition: height .25s linear;
+  }
+  .timeline-item.reveal.from-left  { transform: translateX(-48px); }
+  .timeline-item.reveal.from-right { transform: translateX(48px); }
+  .timeline-item.reveal.visible    { transform: translate(0); }
+  .timeline-dot { z-index: 3; }
+
+  @media (max-width: 720px) {
+    .timeline-item.reveal.from-left,
+    .timeline-item.reveal.from-right { transform: translateY(40px); }
+  }
+
+  /* ============================================================
+     NEW: DATA-SCIENTIST THEMED ANIMATIONS
+     ============================================================ */
+
+  /* Extra floating icons positioned around profile ring */
+  .float-icon.fi-6 { top: 50%;  left: -52px; animation: float3 4.4s ease-in-out infinite; }
+  .float-icon.fi-7 { bottom: -10px; left: 50%; transform: translateX(-50%); animation: float2 3.8s ease-in-out infinite; }
+
+  /* Falling data-stream symbols behind profile */
+  .data-stream {
+    position: absolute;
+    inset: -40px -60px;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .data-stream span {
+    position: absolute;
+    top: -20px;
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--clr-a2);
+    opacity: 0;
+    animation: dataFall linear infinite;
+    text-shadow: 0 0 8px rgba(0,212,255,.6);
+  }
+  @keyframes dataFall {
+    0%   { transform: translateY(0);    opacity: 0; }
+    8%   { opacity: .85; }
+    85%  { opacity: .65; }
+    100% { transform: translateY(340px); opacity: 0; }
+  }
+
+  /* Mini analyst terminal under hero tagline */
+  .mini-terminal {
+    max-width: 420px;
+    margin: 28px auto 8px;
+    padding: 16px 20px 18px;
+    text-align: left;
+  }
+  .mt-dots { display: flex; gap: 6px; margin-bottom: 10px; }
+  .mt-dots span {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,.18);
+  }
+  .mt-dots span:nth-child(1) { background: #ff5f57; }
+  .mt-dots span:nth-child(2) { background: #febc2e; }
+  .mt-dots span:nth-child(3) { background: #28c840; }
+  .mt-body {
+    font-family: var(--font-mono);
+    font-size: .82rem;
+    color: var(--clr-a2);
+    min-height: 1.4em;
+    white-space: pre;
+  }
+  .mt-prompt { color: var(--txt-muted); margin-right: 8px; }
+  .mt-code   { color: #e8eaf6; }
+  .mt-sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 34px;
+    margin-top: 14px;
+  }
+  .mt-sparkline span {
+    flex: 1;
+    height: var(--h);
+    border-radius: 2px 2px 0 0;
+    background: linear-gradient(to top, var(--clr-a1), var(--clr-a2));
+    transform: scaleY(0);
+    transform-origin: bottom;
+    animation: barRise 1.4s var(--ease) forwards, barPulse 2.6s ease-in-out 1.6s infinite;
+  }
+  .mt-sparkline span:nth-child(1) { animation-delay: .05s, 1.6s; }
+  .mt-sparkline span:nth-child(2) { animation-delay: .12s, 1.7s; }
+  .mt-sparkline span:nth-child(3) { animation-delay: .19s, 1.8s; }
+  .mt-sparkline span:nth-child(4) { animation-delay: .26s, 1.9s; }
+  .mt-sparkline span:nth-child(5) { animation-delay: .33s, 2.0s; }
+  .mt-sparkline span:nth-child(6) { animation-delay: .40s, 2.1s; }
+  .mt-sparkline span:nth-child(7) { animation-delay: .47s, 2.2s; }
+  .mt-sparkline span:nth-child(8) { animation-delay: .54s, 2.3s; }
+  .mt-sparkline span:nth-child(9) { animation-delay: .61s, 2.4s; }
+  @keyframes barRise  { to { transform: scaleY(1); } }
+  @keyframes barPulse {
+    0%, 100% { filter: brightness(1); }
+    50%      { filter: brightness(1.35); }
+  }
+
+  @media (max-width: 600px) {
+    .float-icon.fi-6, .float-icon.fi-7 { display: none; }
+    .mini-terminal { margin: 24px 16px 8px; }
+  }
   </style>
 </head>
 <body>
@@ -601,10 +769,15 @@
       <div class="float-icon fi-3"><i class="fas fa-brain"></i></div>
       <div class="float-icon fi-4"><i class="fab fa-react"></i></div>
       <div class="float-icon fi-5"><i class="fab fa-google"></i></div>
+      <div class="float-icon fi-6"><i class="fas fa-database"></i></div>
+      <div class="float-icon fi-7"><i class="fas fa-table-cells"></i></div>
+
+      <!-- Data-stream falling symbols -->
+      <div class="data-stream" id="dataStream" aria-hidden="true"></div>
     </div>
 
     <!-- Name -->
-    <h1 class="hero-name">Elavarasan <span class="gradient-text">T</span></h1>
+    <h1 class="hero-name">ELAVARASAN <span class="gradient-text">T</span></h1>
 
     <!-- Typing role -->
     <div class="hero-role">
@@ -618,6 +791,20 @@
       Transforming Data into Actionable Insights through Analytics,<br />
       Artificial Intelligence, Machine Learning and Cloud Computing.
     </p>
+
+    <!-- Mini analyst terminal -->
+    <div class="mini-terminal glass" aria-hidden="true">
+      <div class="mt-dots"><span></span><span></span><span></span></div>
+      <div class="mt-body">
+        <span class="mt-prompt">&gt;&gt;&gt;</span>
+        <span id="mtCode" class="mt-code"></span><span class="cursor-blink">|</span>
+      </div>
+      <div class="mt-sparkline">
+        <span style="--h:30%"></span><span style="--h:55%"></span><span style="--h:40%"></span>
+        <span style="--h:70%"></span><span style="--h:50%"></span><span style="--h:85%"></span>
+        <span style="--h:60%"></span><span style="--h:95%"></span><span style="--h:45%"></span>
+      </div>
+    </div>
 
     <!-- Primary CTAs -->
     <div class="hero-cta">
@@ -1127,6 +1314,7 @@
 
     <!-- Full timeline -->
     <div class="timeline">
+      <div class="timeline-progress" aria-hidden="true"></div>
 
       <!-- B.Tech -->
       <div class="timeline-item reveal">
